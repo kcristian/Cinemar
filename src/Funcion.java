@@ -1,80 +1,35 @@
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.util.Date;
 
 public class Funcion {
 	
 	private int id_funcion;
 	public static int id_funcion_siguiente=1;
-	private LocalDate fecha;
-	private LocalTime hora_inicio;
-	private LocalTime duracion;
-	private LocalTime hora_fin;
+	
+	private Date fecha;
 	private Sala sala_funcion;
 	private Pelicula pelicula;
 	
-	public Funcion(String fecha,String inicio,String duracion,Sala sala) {
+	public Funcion(Date fecha,Sala sala,Pelicula pelicula) {
 		
 		this.id_funcion=this.id_funcion_siguiente;
-		try {
-			this.fecha=LocalDate.parse(fecha);
-		} catch (Exception e) {
-			System.out.println("Debe ingresar un formato de fecha AAAA-MM-DD");
-		}
-		try {
-			this.hora_inicio=LocalTime.parse(inicio);
-		} catch (Exception e) {
-			System.out.println("Debe ingresar un formato de hora HH:MM:SS");
-		}
-		try {
-			this.duracion=LocalTime.parse(duracion);
-			
-			this.hora_fin=this.hora_inicio.plusMinutes(this.duracion.getMinute());
-			this.hora_fin=this.hora_inicio.plusHours(this.duracion.getHour());
-			
-		} catch (Exception e) {
-			System.out.println("Debe ingresar un formato de hora HH:MM:SS");
-		}
+		this.fecha=fecha;
 		this.sala_funcion=sala;
+		this.pelicula=pelicula;
 		this.id_funcion_siguiente++;
 	}
 
-	public LocalDate getFecha() {
+	public Date getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(String fecha) {
+	public void setFecha(Date fecha) {
 		try {
-			this.fecha=LocalDate.parse(fecha);
+			this.fecha=fecha;
 		} catch (Exception e) {
-			System.out.println("Debe ingresar un formato de fecha AAAA-MM-DD");
+			System.out.println("Debe ingresar un formato de fecha AAAA-MM-DD-hh-mm-ss");
 		}
 	}
 
-	public LocalTime getHora_inicio() {
-		return hora_inicio;
-	}
-
-	public void setHora_inicio(String hora_inicio) {
-		try {
-			this.hora_inicio=LocalTime.parse(hora_inicio);
-		} catch (Exception e) {
-			System.out.println("Debe ingresar un formato de hora HH:MM:SS");
-		}
-	}
-
-	public LocalTime getDuracion() {
-		return duracion;
-	}
-
-	public void setDuracion(String duracion) {
-		try {
-			this.duracion=LocalTime.parse(duracion);
-			this.hora_fin=this.hora_inicio.plusHours(this.duracion.getHour());
-			this.hora_fin=this.hora_inicio.plusMinutes(this.duracion.getMinute());
-		} catch (Exception e) {
-			System.out.println("Debe ingresar un formato de hora HH:MM:SS");
-		}
-	}
 
 	public Sala getSala_funcion() {
 		return sala_funcion;
@@ -87,19 +42,22 @@ public class Funcion {
 	public int getId_funcion() {
 		return id_funcion;
 	}
-
-	public LocalTime getHora_fin() {
-		return hora_fin;
-	}
 	
+	public Pelicula getPelicula() {
+		return pelicula;
+	}
+
+	public void setPelicula(Pelicula pelicula) {
+		this.pelicula = pelicula;
+	}
+
 	public void mostrarDatosFuncion() {
 		
 		System.out.println("Datos de la funcion");
 		System.out.println("Id de la funcion :"+ this.id_funcion);
 		System.out.println("Fecha de la funcion: "+this.fecha);
-		System.out.println("Hora de la funcion: "+this.hora_inicio);
-		System.out.println("Duracion de la funcion: "+this.duracion);
-		System.out.println("Hora de finalizacion: "+this.hora_fin);
+		System.out.println("Sala de la funcion: "+this.sala_funcion.getNum_sala());
+		System.out.println("Pelicula: "+this.pelicula.getNombre());
 		System.out.println();
 		this.sala_funcion.mostrarDatosSala();
 	}

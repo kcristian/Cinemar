@@ -6,6 +6,7 @@ public class Pelicula {
 	public static int num_pelicula_siguiente=1;
 	private String nombre;
 	private String sinopsis;
+	private int duracion;
 	private ArrayList<String> genero;
 	private String director;
 	private ArrayList<String> reparto;
@@ -86,10 +87,20 @@ public class Pelicula {
 		return num_pelicula;
 	}
 	
+	
+	public int getDuracion() {
+		return duracion;
+	}
+
+	public void setDuracion(int duracion) {
+		this.duracion = duracion;
+	}
+
 	public void mostrarDatosPelicula() {
 		System.out.println("DATOS DE PELICULA");
 		System.out.println("numero de pelicula: "+getNum_pelicula());
 		System.out.println("nombre de pelicula: "+getNombre());
+		System.out.println("duracion: "+getDuracion()+" min");
 		System.out.println("generos: ");
 		for(int i=0;i<this.genero.size();i++) {
 			System.out.println(this.genero.get(i));

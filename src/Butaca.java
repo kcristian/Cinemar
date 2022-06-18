@@ -3,15 +3,13 @@ public class Butaca {
 
 	private int num_butaca;
 	public static int num_butaca_siguiente=1;
-	private double precio;
-	private Estado_asiento estado;
+	private Estado_butaca estado;
 	
 	public Butaca() {
 		
 		this.num_butaca=num_butaca_siguiente;
 		this.num_butaca_siguiente++;
-		this.precio=500;
-		this.estado=Estado_asiento.LIBRE;
+		this.estado=Estado_butaca.LIBRE;
 	}
 
 	public int getNum_butaca() {
@@ -22,26 +20,26 @@ public class Butaca {
 		this.num_butaca = num_asiento;
 	}
 
-	public double getPrecio() {
-		return precio;
-	}
-
-	public void setPrecio(double precio) {
-		this.precio = precio;
-	}
-
-	public Estado_asiento getEstado() {
+	public Estado_butaca getEstado() {
 		return estado;
 	}
 
 	public void setEstado(String estado) {
 		try {
-			this.estado = Estado_asiento.valueOf(estado);
+			this.estado = Estado_butaca.valueOf(estado);
 		} catch (Exception e) {
 			System.out.println("debe ingresar un estado valido");
 		}
 	}
 	
-	
+	public boolean ButacaLibre() {
+		boolean respuesta=true;
+		
+		if(getEstado().equals(Estado_butaca.RESERVADO)) {
+			respuesta=false;
+		}
+		
+		return respuesta;
+	}
 	
 }
