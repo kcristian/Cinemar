@@ -1,23 +1,25 @@
 
-public class Asiento {
+public class Butaca {
 
-	private int num_asiento;
+	private int num_butaca;
+	public static int num_butaca_siguiente=1;
 	private double precio;
 	private Estado_asiento estado;
 	
-	public Asiento(int numero_asiento,double precio) {
+	public Butaca() {
 		
-		this.num_asiento=numero_asiento;
-		this.precio=precio;
+		this.num_butaca=num_butaca_siguiente;
+		this.num_butaca_siguiente++;
+		this.precio=500;
 		this.estado=Estado_asiento.LIBRE;
 	}
 
-	public int getNum_asiento() {
-		return num_asiento;
+	public int getNum_butaca() {
+		return num_butaca;
 	}
 
-	public void setNum_asiento(int num_asiento) {
-		this.num_asiento = num_asiento;
+	public void setNum_butaca(int num_asiento) {
+		this.num_butaca = num_asiento;
 	}
 
 	public double getPrecio() {
@@ -39,6 +41,7 @@ public class Asiento {
 			System.out.println("debe ingresar un estado valido");
 		}
 	}
+	
 	
 	
 }
