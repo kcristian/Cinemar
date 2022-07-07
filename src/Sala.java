@@ -3,24 +3,22 @@ import java.util.ArrayList;
 public class Sala {
 	
 	private int num_sala;
-	public static int num_sala_siguiente=1;
 	private int capacidad;
 	private ArrayList<String> formato_de_sala;
 	private ArrayList<Butaca> asientos;
 	private float precio_entrada;
 	
-	public Sala(int capacidad){
+	public Sala(int num_sala, int capacidad,int ultimo_num_butaca){
 		
-		this.num_sala=num_sala_siguiente;
-		num_sala_siguiente++;
+		this.num_sala=num_sala;
 		this.capacidad=capacidad;
 		this.asientos=new ArrayList<>();
-		for(int i=0;i<this.capacidad;i++){
-			asientos.add(new Butaca());
+		for(int i=ultimo_num_butaca+1;i<=ultimo_num_butaca+this.capacidad;i++){
+			asientos.add(new Butaca(i));
 		}
 		this.formato_de_sala=new ArrayList<>();
 		formato_de_sala.add("2D");
-		
+		this.precio_entrada=700;
 	}
 
 	public int getNum_sala() {
@@ -77,18 +75,37 @@ public class Sala {
 		}
 		
 	}
-
-	public void mostrarDatosSala() {
-		
-		System.out.println("DATOS DE LA SALA: ");
-		System.out.println("Numero de sala: "+this.num_sala);
-		System.out.println("Capacidad: "+this.capacidad);
-		System.out.println("Butacas: ");
-		for(Butaca a:asientos) {
-			System.out.println("Butaca Nº "+a.getNum_butaca());
-			System.out.println("Estado "+a.getEstado());
+	public String dameFormatos() {
+		String resultado = "[";
+		for(int i=0;i<formato_de_sala.size();i++) {
+			if(i!=formato_de_sala.size()) {
+				String valor= getFormato_de_sala().get(i)+",";
+				resultado=resultado+valor;	
+			}else {
+				String valor= getFormato_de_sala().get(i);
+				resultado=resultado+valor;
+			}
 		}
 		
+		return resultado + " ]";
+	}
+	
+	public String describeAsientos() {
+		String resultado = "\n asientos: [";
+		for(int i=0;i<getAsientos().size();i++) {
+			if(i!=asientos.size()) {
+				String valor=getAsientos().get(i).getNum_butaca()+ " estado: "+getAsientos().get(i).estaLibre()+ ",";
+				resultado = resultado+valor;
+			}else {
+				String valor=getAsientos().get(i).getNum_butaca()+" estado: "+getAsientos().get(i).estaLibre();
+				resultado = resultado+valor;
+			}
+			
+		}
+		return resultado + "]";
+	}
+	public String toString() {
+		return "numero de sala: "+getNum_sala()+" capacidad: "+getCapacidad()+" formatos de sala: "+dameFormatos()+ describeAsientos()+ "precio butaca: "+getPrecio_entrada();
 	}
 	public boolean ExisteButaca(int numero_butaca) {
 		boolean respuesta=false;
@@ -99,5 +116,6 @@ public class Sala {
 		}
 		
 		return respuesta;
-	}       
+	}
+	
 }

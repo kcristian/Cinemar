@@ -2,14 +2,12 @@
 public class Butaca {
 
 	private int num_butaca;
-	public static int num_butaca_siguiente=1;
-	private Estado_butaca estado;
+	private boolean estado;
 	
-	public Butaca() {
+	public Butaca(int num_butaca) {
 		
-		this.num_butaca=num_butaca_siguiente;
-		this.num_butaca_siguiente++;
-		this.estado=Estado_butaca.LIBRE;
+		this.num_butaca=num_butaca;
+		this.estado=false;
 	}
 
 	public int getNum_butaca() {
@@ -20,26 +18,25 @@ public class Butaca {
 		this.num_butaca = num_asiento;
 	}
 
-	public Estado_butaca getEstado() {
+	public boolean getEstado() {
 		return estado;
 	}
 
-	public void setEstado(String estado) {
-		try {
-			this.estado = Estado_butaca.valueOf(estado);
-		} catch (Exception e) {
-			System.out.println("debe ingresar un estado valido");
-		}
+	public void setEstado(boolean estado) {
+		this.estado=estado;
 	}
 	
-	public boolean ButacaLibre() {
-		boolean respuesta=true;
+	public String estaLibre() {
+		String respuesta="LIBRE";
 		
-		if(getEstado().equals(Estado_butaca.RESERVADO)) {
-			respuesta=false;
+		if(getEstado()) {
+			respuesta="OCUPADA";
 		}
 		
 		return respuesta;
 	}
 	
+	public String toString() {
+		return "butaca Nº"+getNum_butaca()+" estado: "+estaLibre()+" \n";
+	}
 }

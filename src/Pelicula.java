@@ -3,28 +3,32 @@ import java.util.ArrayList;
 public class Pelicula {
 	
 	private int num_pelicula;
-	public static int num_pelicula_siguiente=1;
 	private String nombre;
 	private String sinopsis;
 	private int duracion;
-	private ArrayList<String> genero;
 	private String director;
 	private ArrayList<String> reparto;
+	private ArrayList<Genero> generos;
 	private Clasificacion clasificacion;
 	private TipoPelicula tipo;
 	
-	Pelicula(String nombre,Clasificacion cl,TipoPelicula tipo){
+	Pelicula(int num_pelicula, String nombre,Clasificacion cl,TipoPelicula tipo,Genero genero,int duracion){
 		
-		this.num_pelicula=num_pelicula_siguiente;
+		this.num_pelicula= num_pelicula;
 		this.nombre=nombre;
 		this.sinopsis="NINGUNA";
-		this.genero=new ArrayList<>();
-		this.genero.add("-");
+		this.generos=new ArrayList<>();
+		this.generos.add(genero);
 		this.reparto=new ArrayList<>();
 		this.reparto.add("-");
 		this.director="-";
 		this.clasificacion=cl;
 		this.tipo=tipo;
+		this.duracion=duracion;
+	}
+
+	public void setNum_pelicula(int num_pelicula) {
+		this.num_pelicula = num_pelicula;
 	}
 
 	public String getNombre() {
@@ -43,12 +47,12 @@ public class Pelicula {
 		this.sinopsis = sinopsis;
 	}
 
-	public ArrayList<String> getGenero() {
-		return genero;
+	public ArrayList<Genero> getGeneros() {
+		return generos;
 	}
 
-	public void setGenero(ArrayList<String> genero) {
-		this.genero = genero;
+	public void setGeneros(ArrayList<Genero> generos) {
+		this.generos = generos;
 	}
 
 	public String getDirector() {
@@ -95,24 +99,35 @@ public class Pelicula {
 	public void setDuracion(int duracion) {
 		this.duracion = duracion;
 	}
-
-	public void mostrarDatosPelicula() {
-		System.out.println("DATOS DE PELICULA");
-		System.out.println("numero de pelicula: "+getNum_pelicula());
-		System.out.println("nombre de pelicula: "+getNombre());
-		System.out.println("duracion: "+getDuracion()+" min");
-		System.out.println("generos: ");
-		for(int i=0;i<this.genero.size();i++) {
-			System.out.println(this.genero.get(i));
+	
+	public void agregarActor(String nom_ape) {
+		reparto.add(nom_ape);
+	}
+	public void agregarGenero(Genero g) {
+		generos.add(g);
+	}
+	public String dameReparto() {
+		String resultado="[ ";
+		for(int i=0;i<reparto.size();i++) {
+			String valor= getReparto().get(i)+"/";
+			resultado = resultado + valor;
 		}
-		System.out.println("sinopsis: "+getSinopsis());
-		System.out.println("director: "+getDirector());
 		
-		System.out.println("reparto:");
-		for(int i=0;i<this.reparto.size();i++) {
-			System.out.println(this.reparto.get(i));
+		return resultado + " ]";
+	}
+	
+	public String dameGeneros() {
+		String resultado = "[";
+		for(int i=0;i<generos.size();i++) {
+			String valor= getGeneros().get(i).getNombre()+"/";
+			resultado=resultado+valor;
 		}
-		System.out.println("Clasificacion: "+getClasificacion().getIdentificador()+": "+getClasificacion().getDescripcion());
-		System.out.println("Tipo: "+getTipo().getFormato()+" "+getTipo().getIdioma()+" "+getTipo().isSubtitulada());
+		
+		return resultado + " ]";
+	}
+	public String toString() {
+		return "numero pelicula: "+ getNum_pelicula()+ " nombre: "+ getNombre() + " sinopsis: " + getSinopsis() + " duracion: "+ getDuracion() +
+				" director: "+ getDirector()+ "\n"+ " reparto: "+ dameReparto() +"\n"+ " genero: " + dameGeneros() +"\n"+ 
+				"clasificacion: "+getClasificacion().toString()+" tipo de pelicula: "+ getTipo().toString();
 	}
 }

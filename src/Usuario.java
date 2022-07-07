@@ -1,4 +1,6 @@
+import java.text.SimpleDateFormat;
 import java.time.*;
+import java.util.Date;
 
 public class Usuario{
 
@@ -7,11 +9,12 @@ public class Usuario{
 	private String username;
 	private String password;
 	private String email;
-	private LocalDate fecha_alta;
-	public static int id_siguiente=1;
+	private Date fecha_nacimiento;
+	private int telefono;
+	private Date fecha_alta;
 	
-	public Usuario(String nombre,String password,String rs,String email) {
-		
+	public Usuario(int user_id,String nombre,String password,String rs,String email,int telefono,Date fecha_nac) {
+		super();
 		this.username=nombre;
 		this.password=password;
 		try {
@@ -19,13 +22,26 @@ public class Usuario{
 		} catch (Exception e) {
 			System.out.println("debe ingresar un rol valido");
 		}
-		this.fecha_alta=LocalDate.now();
+		this.fecha_alta=new Date();
 		this.email=email;
-		this.userid=id_siguiente;
-		this.id_siguiente++;
+		this.userid=user_id;
+		this.telefono=telefono;
+		this.fecha_nacimiento=fecha_nac;
 	}
 	
-	
+	public Usuario() {
+		
+	}
+	public int getTelefono() {
+		return telefono;
+	}
+
+
+	public void setTelefono(int telefono) {
+		this.telefono = telefono;
+	}
+
+
 	public int getUserid() {
 		return userid;
 	}
@@ -36,10 +52,14 @@ public class Usuario{
 	}
 
 
-	public LocalDate getFecha_alta() {
+	public Date getFecha_alta() {
 		return fecha_alta;
 	}
 
+
+	public void setFecha_alta(Date fecha_alta) {
+		this.fecha_alta = fecha_alta;
+	}
 
 	public String getUsername() {
 		return username;
@@ -61,8 +81,12 @@ public class Usuario{
 		return rol_usuario;
 	}
 
-	public void setRol_usuario(Rol rol_usuario) {
-		this.rol_usuario = rol_usuario;
+	public void setRol_usuario(String rol_usuario) {
+		try {
+			this.rol_usuario=Rol.valueOf(rol_usuario.toUpperCase());
+		} catch (Exception e) {
+			System.out.println("debe ingresar un rol valido");
+		}
 	}
 	
 	
@@ -76,13 +100,24 @@ public class Usuario{
 	}
 
 
-	public void mostrarDatos() {
-		
-		System.out.println("user Id: "+this.userid);
-		System.out.println("username: "+this.username);
-		System.out.println("password: "+this.password);
-		System.out.println("rol: "+this.rol_usuario);
-		System.out.println("fecha de alta: "+ this.fecha_alta);
-		System.out.println("email: "+this.email);
+	public Date getFecha_nacimiento() {
+		return fecha_nacimiento;
 	}
+
+
+	public void setFecha_nacimiento(Date fecha_nacimiento) {
+		this.fecha_nacimiento = fecha_nacimiento;
+	}
+
+
+	public String toString() {
+		final String NEW_FORMAT="yyyy/MM/dd";
+		SimpleDateFormat sdf = new SimpleDateFormat(NEW_FORMAT);
+		
+		return "id: "+ getUserid() + " rol: " +getRol_usuario() + " username: " +
+				getUsername() + " password: " + getPassword() + " email: " + getEmail() + " fecha de alta: " + sdf.format(fecha_alta);
+		
+	}
+	
+	
 }

@@ -1,21 +1,19 @@
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Funcion {
 	
 	private int id_funcion;
-	public static int id_funcion_siguiente=1;
-	
 	private Date fecha;
 	private Sala sala_funcion;
 	private Pelicula pelicula;
 	
-	public Funcion(Date fecha,Sala sala,Pelicula pelicula) {
+	public Funcion(int idfuncion, Date fecha,Sala sala,Pelicula pelicula) {
 		
-		this.id_funcion=this.id_funcion_siguiente;
+		this.id_funcion=idfuncion;
 		this.fecha=fecha;
 		this.sala_funcion=sala;
 		this.pelicula=pelicula;
-		this.id_funcion_siguiente++;
 	}
 
 	public Date getFecha() {
@@ -23,11 +21,7 @@ public class Funcion {
 	}
 
 	public void setFecha(Date fecha) {
-		try {
-			this.fecha=fecha;
-		} catch (Exception e) {
-			System.out.println("Debe ingresar un formato de fecha AAAA-MM-DD-hh-mm-ss");
-		}
+		this.fecha=fecha;
 	}
 
 
@@ -43,6 +37,10 @@ public class Funcion {
 		return id_funcion;
 	}
 	
+	public void setId_funcion(int id_funcion) {
+		this.id_funcion = id_funcion;
+	}
+
 	public Pelicula getPelicula() {
 		return pelicula;
 	}
@@ -51,15 +49,12 @@ public class Funcion {
 		this.pelicula = pelicula;
 	}
 
-	public void mostrarDatosFuncion() {
+	public String toString() {
+		final String NEW_FORMAT="yyyy/MM/dd";
+		SimpleDateFormat sdf = new SimpleDateFormat(NEW_FORMAT);
 		
-		System.out.println("Datos de la funcion");
-		System.out.println("Id de la funcion :"+ this.id_funcion);
-		System.out.println("Fecha de la funcion: "+this.fecha);
-		System.out.println("Sala de la funcion: "+this.sala_funcion.getNum_sala());
-		System.out.println("Pelicula: "+this.pelicula.getNombre());
-		System.out.println();
-		this.sala_funcion.mostrarDatosSala();
+		return "id funcion: "+ getId_funcion()+ " Fecha: "+ sdf.format(getFecha())+ " Horario: "+sdf.format(getFecha()) + " en sala: "+
+				getSala_funcion().getNum_sala()+" pelicula: "+getPelicula().getNombre();
 	}
 	
 }

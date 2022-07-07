@@ -1,22 +1,22 @@
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 public class Reserva {
 	
 	private int num_reserva;
-	public static int num_reserva_siguiente=1;
 	private Date fecha_reserva;
 	private Usuario usuario;
 	private Funcion funcion;
 	private Butaca butaca;
 	private float precio;
-	private int descuento;
-	private double precio_final;
+	private float descuento;
+	private float precio_final;
 	
-	public Reserva(Usuario usuario,Funcion funcion,Butaca butaca,int descuento) {
-		this.num_reserva=num_reserva_siguiente;
-		this.fecha_reserva=new Date();
-		//this.fecha_reserva=Calendar.getInstance().getTime();
+	
+	public Reserva(int num_reserva, Usuario usuario,Funcion funcion,Butaca butaca,int descuento) {
+		this.num_reserva=num_reserva;
+		this.fecha_reserva=new Date();;
 		this.usuario=usuario;
 		this.funcion=funcion;
 		this.butaca=butaca;
@@ -25,7 +25,6 @@ public class Reserva {
 		this.precio_final=this.precio-(this.precio*(this.descuento/100));
 		
 		
-		this.num_reserva_siguiente++;
 	}
 
 	public Date getFecha_reserva() {
@@ -68,7 +67,7 @@ public class Reserva {
 		this.precio = precio;
 	}
 
-	public int getDescuento() {
+	public float getDescuento() {
 		return descuento;
 	}
 
@@ -80,7 +79,7 @@ public class Reserva {
 		return precio_final;
 	}
 
-	public void setPrecio_final(double precio_final) {
+	public void setPrecio_final(float precio_final) {
 		this.precio_final = precio_final;
 	}
 
@@ -88,18 +87,12 @@ public class Reserva {
 		return num_reserva;
 	}
 	
-	public void mostrarDatosReserva() {
-		System.out.println("DATOS DE RESERVA: ");
-		System.out.println("numero de reserva"+getNum_reserva());
-		System.out.println("fecha de reserva "+getFecha_reserva());
-		System.out.println("Usuario: "+getUsuario().getUsername());
-		System.out.println("Pelicula: "+getFuncion().getPelicula().getNombre());
-		System.out.println("Fecha: "+getFuncion().getFecha());
-		System.out.println("Butaca: "+getButaca().getNum_butaca());
-		System.out.println("precio: "+getPrecio());
-		System.out.println("descuento: "+getDescuento());
-		System.out.println("total: "+getPrecio_final());
-		
+	public String toString() {
+		final String NEW_FORMAT="yyyy/MM/dd";
+		SimpleDateFormat sdf = new SimpleDateFormat(NEW_FORMAT);
+		return "numero de reserva: "+getNum_reserva()+" fecha: "+sdf.format(getFecha_reserva())+ " usuario: "+ getUsuario().getUsername()+
+				"\nfuncion: "+getFuncion().toString()+
+				"\nbutaca: "+getButaca().getNum_butaca()+" precio: "+getPrecio()+ " descuento: "+getDescuento()+" precio final: "+getPrecio_final();
 	}
 	
 }

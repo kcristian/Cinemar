@@ -25,5 +25,7 @@ public class Clasificacion {
 		this.descripcion = descripcion;
 	}
 	
-	
+	public String toString() {
+		return "identificador: "+getIdentificador()+" descripcion: "+getDescripcion();
+	}
 }

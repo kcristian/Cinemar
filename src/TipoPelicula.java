@@ -40,5 +40,7 @@ public class TipoPelicula {
 		this.subtitulada = subtitulada;
 	}
 	
-	
+	public String toString() {
+		return "formato: "+getFormato()+" idioma: "+getIdioma()+" subtitulos: "+isSubtitulada();
+	}
 }
