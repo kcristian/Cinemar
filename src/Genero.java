@@ -8,7 +8,10 @@ public class Genero {
 		this.numero_genero= num_genero;
 		this.nombre=nombre;
 	}
-
+	
+	public Genero() {
+		
+	}
 	public String getNombre() {
 		return nombre;
 	}

@@ -57,4 +57,13 @@ public class Funcion {
 				getSala_funcion().getNum_sala()+" pelicula: "+getPelicula().getNombre();
 	}
 	
+	public boolean hayLugares(int cantidad_req) {
+		boolean respuesta = false;
+		
+		if(cantidad_req <= getSala_funcion().cantidadAsientosLibres()) {
+			respuesta=true;
+		}
+		
+		return respuesta;
+	}
 }

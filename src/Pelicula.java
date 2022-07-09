@@ -27,6 +27,9 @@ public class Pelicula {
 		this.duracion=duracion;
 	}
 
+	public Pelicula() {
+		
+	}
 	public void setNum_pelicula(int num_pelicula) {
 		this.num_pelicula = num_pelicula;
 	}

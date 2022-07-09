@@ -1,19 +1,39 @@
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Cinemar_main {
 
 	public static void main(String[] args) {
 		//Datos de usuario de prueba
-		String username="Cristian9";
-		String password="1234425";
+		String username="Andrea";
+		String password="4899786";
 		String rol="AdmInIStracioN";
-		String email="cristian9@gmail.com";
-		int telefono=4290478;
-		Usuario u1=new Usuario(100,username,password,rol,email,telefono,new Date(192,7,10));
+		String email="andrea@gmail.com";
+		int telefono=42228899;
+		Usuario u1=new Usuario(200,username,password,rol,email,telefono,new Date(192,7,10));
 		Cinemar c=new Cinemar();
+		for(int i=11;i<=21;i++) {
+			c.crearButaca(i, 2);
+		}
+
 		
-		//Datos_prueba dp=new Datos_prueba();
+		/*probando dame actores
+		 * ArrayList<String> mis_actores;
+		mis_actores=c.dameActores(1);
+		for(int i=0;i<mis_actores.size();i++) {
+			System.out.println(mis_actores.get(i));
+		}*/
+		//c.CrearReserva();
+		/*probando modificar reserva
+		 * Date fecha3=new Date(122,6,8);
+		final String NEW_FORMAT="yyyy/MM/dd";
+		SimpleDateFormat sdf = new SimpleDateFormat(NEW_FORMAT);
+		c.modificarReserva(3,sdf.format(fecha3),700,4,100,1,5,1,4);*/
+		
+		/*Datos_prueba dp=new Datos_prueba();
+		dp.iniciar();
+		System.out.println(dp.getReservas().get(0).getButacas().get(0).estaLibre());*/
 		
 		//dp.getPeliculas().get(1).agregarActor("cristian");
 		//System.out.println(dp.getPeliculas().get(1).toString());
@@ -37,10 +57,11 @@ public class Cinemar_main {
 		r.mostrarDatosReserva();*/
 		
 		
-		/*Date f2=new Date();
-		final String NEW_FORMAT="yyyy/MM/dd";
+		Date f2=new Date();
+		/*final String NEW_FORMAT="yyyy/MM/dd";
 		SimpleDateFormat sdf = new SimpleDateFormat(NEW_FORMAT);
 		System.out.println("hoy es: " + sdf.format(f2));*/
+	
 		
 		
 	}

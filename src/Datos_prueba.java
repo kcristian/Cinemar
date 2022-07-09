@@ -103,12 +103,12 @@ public class Datos_prueba {
 		peliculas.add(p5);
 		
 		//creando salas
-		Sala s1=new Sala(1,500,500);
-		Sala s2=new Sala(2,500,1000);
-		Sala s3=new Sala(3,500,1500);
-		Sala s4=new Sala(4,500,2000);
-		Sala s5=new Sala(5,500,2500);
-		Sala s6=new Sala(6,500,3000);
+		Sala s1=new Sala(1,50,50);
+		Sala s2=new Sala(2,50,100);
+		Sala s3=new Sala(3,50,150);
+		Sala s4=new Sala(4,50,200);
+		Sala s5=new Sala(5,50,250);
+		Sala s6=new Sala(6,50,300);
 		
 		salas.add(s1);
 		salas.add(s2);
@@ -135,7 +135,7 @@ public class Datos_prueba {
 		funciones.add(new Funcion(5,f5,s5,p4));
 		funciones.add(new Funcion(6,f6,s6,p5));
 		
-		Reserva r=new Reserva(1, u5, funciones.get(4), funciones.get(4).getSala_funcion().getAsientos().get(25),10);
+		Reserva r=new Reserva(1, u5, funciones.get(4), 7,10);
 		reservas.add(r);
 	}
 }

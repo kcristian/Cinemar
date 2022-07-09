@@ -1,4 +1,5 @@
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -8,22 +9,26 @@ public class Reserva {
 	private Date fecha_reserva;
 	private Usuario usuario;
 	private Funcion funcion;
-	private Butaca butaca;
+	private ArrayList<Butaca> butacas;
 	private float precio;
 	private float descuento;
 	private float precio_final;
+	private int cantidad_butacas;
 	
-	
-	public Reserva(int num_reserva, Usuario usuario,Funcion funcion,Butaca butaca,int descuento) {
+	public Reserva(int num_reserva, Usuario usuario,Funcion funcion,int cant_butacas,int descuento) {
 		this.num_reserva=num_reserva;
 		this.fecha_reserva=new Date();;
 		this.usuario=usuario;
 		this.funcion=funcion;
-		this.butaca=butaca;
+		this.butacas=new ArrayList<>();
 		this.precio=this.funcion.getSala_funcion().getPrecio_entrada();
 		this.descuento=descuento;
 		this.precio_final=this.precio-(this.precio*(this.descuento/100));
-		
+		this.cantidad_butacas=cant_butacas;
+		for(int i=0;i<cant_butacas;i++) {
+			getFuncion().getSala_funcion().getAsientos().get(i).setEstado(true);
+			butacas.add(getFuncion().getSala_funcion().getAsientos().get(i));
+		}
 		
 	}
 
@@ -51,12 +56,20 @@ public class Reserva {
 		this.funcion = funcion;
 	}
 
-	public Butaca getButaca() {
-		return butaca;
+	public ArrayList<Butaca> getButacas() {
+		return butacas;
 	}
 
-	public void setButaca(Butaca butaca) {
-		this.butaca = butaca;
+	public void setButacas(ArrayList<Butaca> butacas) {
+		this.butacas = butacas;
+	}
+
+	public void setNum_reserva(int num_reserva) {
+		this.num_reserva = num_reserva;
+	}
+
+	public void setDescuento(float descuento) {
+		this.descuento = descuento;
 	}
 
 	public double getPrecio() {
@@ -91,8 +104,18 @@ public class Reserva {
 		final String NEW_FORMAT="yyyy/MM/dd";
 		SimpleDateFormat sdf = new SimpleDateFormat(NEW_FORMAT);
 		return "numero de reserva: "+getNum_reserva()+" fecha: "+sdf.format(getFecha_reserva())+ " usuario: "+ getUsuario().getUsername()+
-				"\nfuncion: "+getFuncion().toString()+
-				"\nbutaca: "+getButaca().getNum_butaca()+" precio: "+getPrecio()+ " descuento: "+getDescuento()+" precio final: "+getPrecio_final();
+				"\nfuncion: "+getFuncion().toString()+ dameButacas()
+				+" precio: "+getPrecio()+ " descuento: "+getDescuento()+" precio final: "+getPrecio_final();
+	}
+	
+	public String dameButacas() {
+		String resultado="";
+		
+		for(int i=0;i<butacas.size();i++) {
+			resultado ="numero butaca: "+butacas.get(i).getNum_butaca() + " \n";
+		}
+		return resultado;
+		
 	}
 	
 }

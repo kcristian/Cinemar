@@ -24,7 +24,7 @@ insert into actores values(16,'Donald', 'Moffat');
 insert into actores values(17,'Joel', 'Polis');
 insert into actores values(18,'Thomas', 'Waites');
 
-/* insertando peliculas */
+/* insertando peliculas */ describe peliculas;
 insert into peliculas values(1,'PIRATAS DEL CARIBE 1','la maldicion del perla negra',143,'Gore Verbinski',1);
 insert into peliculas values(2,'LA COSA','un equipo cientifico descubre en la antártida un ente de otro mundo',109,'John Carpenter',2);
 
@@ -97,19 +97,114 @@ insert into funciones values(1,'2022-04-07',5,1);
 insert into funciones values(2,'2022-05-07',3,2);
 
 /* insertando butacas*/ select * from butacas;
-insert into butacas(id_butaca,salas_id_sala) values(1,1);
-insert into butacas(id_butaca,salas_id_sala) values(2,1);
-insert into butacas(id_butaca,salas_id_sala) values(3,1);
-insert into butacas(id_butaca,salas_id_sala) values(4,1);
-insert into butacas(id_butaca,salas_id_sala) values(5,1);
-insert into butacas(id_butaca,salas_id_sala) values(6,1);
-insert into butacas(id_butaca,salas_id_sala) values(7,1);
-insert into butacas(id_butaca,salas_id_sala) values(8,1);
-insert into butacas(id_butaca,salas_id_sala) values(9,1);
-insert into butacas(id_butaca,salas_id_sala) values(10,1);
+insert into butacas(id_butaca,salas_id_sala,reservas_id_reserva) values(1,1,1);
+insert into butacas(id_butaca,salas_id_sala,reservas_id_reserva) values(2,1,1);
+insert into butacas(id_butaca,salas_id_sala,reservas_id_reserva) values(3,1,1);
+insert into butacas(id_butaca,salas_id_sala,reservas_id_reserva) values(4,1,1);
+insert into butacas(id_butaca,salas_id_sala,reservas_id_reserva) values(5,1,1);
+insert into butacas(id_butaca,salas_id_sala,reservas_id_reserva) values(6,1,1);
+insert into butacas(id_butaca,salas_id_sala,reservas_id_reserva) values(7,1,1);
+insert into butacas(id_butaca,salas_id_sala,reservas_id_reserva) values(8,1,1);
+insert into butacas(id_butaca,salas_id_sala,reservas_id_reserva) values(9,1,1);
+insert into butacas(id_butaca,salas_id_sala,reservas_id_reserva) values(10,1,1);
+select * from butacas;
+
+/*insertando reservas*/ describe reparto;
+describe peliculas;
+select id_genero_pelicula,genero_peliculas.nombre, id_pelicula from peliculas inner join genero_peliculas where id_pelicula=2;
+describe genero_peliculas;
+insert into reservas values(1,'2022-06-20',600,5,1,1,5,1);
+describe reservas;
+select * from reservas;
+/* no se puede realizar reservas si no existen funciones, ni hacer reservas en salas que no tienen funciones*/
+select  actores.nombre, actores.apellido from actores inner join reparto inner join peliculas where id_pelicula=1 ;
+
+/*update y delete de reservas*/
+select * from reservas;
+update reservas set id_reserva='4', fecha='2022-07-09',precio='500',descuento='4',usuarios_id_usuario='100',funciones_id_funcion='1',funciones_salas_id_sala='5',funciones_peliculas_id_pelicula='1' where id_reserva=3;
+insert into reservas values(3,'2022-07-08',700,4,100,1,5,1);
+delete  from reservas where id_reserva=3;
+insert into reservas values(4,'2022-07-09',500,2,100,2,3,2);
+
+select id_reserva, fecha, precio,username,email,telefono,id_usuario from usuarios inner join reservas on id_usuario=usuarios_id_usuario where usuarios.id_usuario=100;
+select * from reservas where usuarios_id_usuario=100;
+describe reservas;
+select * from funciones;
+
+select  actores.nombre, actores.apellido from actores inner join reparto inner join peliculas on peliculas.reparto = reparto.id_reparto where id_pelicula=1; 
+describe reparto;
+describe peliculas;
+
+select * from salas;
+select * from formato_salas;
+select * from salas_tienen_formato_salas;
+
+/* ver salas*/
+select id_sala as numero_de_sala,capacidad,formato_salas_id_formato,identificador as formato,descripcion,precio from salas inner join salas_tienen_formato_salas inner join formato_salas on id_sala=salas_id_sala and formato_salas_id_formato=id_formato order by id_sala;
+
+/*ver reservas*/
+select * from reservas;
+select id_reserva, reservas.fecha, id_usuario,username,id_funcion,funciones.fecha,salas_id_sala,peliculas_id_pelicula,peliculas.nombre,cantidad from reservas inner join usuarios inner join funciones inner join salas inner join peliculas on usuarios_id_usuario=usuarios.id_usuario and funciones_id_funcion=funciones.id_funcion and funciones_salas_id_sala=salas.id_sala and funciones_peliculas_id_pelicula=peliculas.id_pelicula;
+select id_reserva,username from reservas inner join usuarios on reservas.usuarios_id_usuario = usuarios.id_usuario order by id_reserva;
+
+update reservas set cantidad='6' where id_reserva=1;
+update reservas set cantidad='7' where id_reserva=2;
+update reservas set cantidad='7' where id_reserva=3;
+update reservas set cantidad='5' where id_reserva=4;
+describe reservas;
+
+select * from reservas;
+/*creando vistas*/
+create view vista_reservas_1 as select id_reserva, reservas.fecha as fecha_reserva, id_usuario,username,id_funcion,funciones.fecha as fecha_funcion,salas_id_sala,peliculas_id_pelicula,peliculas.nombre,cantidad from reservas inner join usuarios inner join funciones inner join salas inner join peliculas on usuarios_id_usuario=usuarios.id_usuario and funciones_id_funcion=funciones.id_funcion and funciones_salas_id_sala=salas.id_sala and funciones_peliculas_id_pelicula=peliculas.id_pelicula;
+
+select * from vista_reservas_1;
+create view vista_salas_1 as select id_sala as numero_de_sala,capacidad,formato_salas_id_formato,identificador as formato,descripcion,precio from salas inner join salas_tienen_formato_salas inner join formato_salas on id_sala=salas_id_sala and formato_salas_id_formato=id_formato order by id_sala;
+
+select * from vista_salas_1;
 
 
-/*insertando reservas*/ describe reservas;
-insert into reservas values(1,'2022-06-20',600,1,1,5,1);
+select id_reserva, fecha_reserva,id_usuario,username,id_funcion,fecha_funcion,salas_id_sala,peliculas_id_pelicula,nombre,cantidad,numero_de_sala,cantidad,precio as precio_unitario
+from vista_reservas_1 inner join vista_salas_1 on salas_id_sala=numero_de_sala;
 
-/* no se puede realizar reservas si no existen funciones*/
+select * from butacas;
+alter table butacas drop column `reservas_id_reserva`;
+alter table butacas drop constraint `fk_butacas_reservas1`;
+
+describe butacas;
+select * from formato_salas;
+ select id_sala,capacidad,salas_id_sala,formato_salas_id_formato,id_formato,identificador,descripcion,precio from salas inner join salas_tienen_formato_salas inner join formato_salas;
+ 
+ /* modificando butacas*/
+ use cinemar_v1;
+ select * from butacas;
+ 
+ alter table butacas add column identificador varchar(5) unique after id_butaca;
+ 
+ update butacas set identificador ='A1' where id_butaca=1;
+  update butacas set identificador ='A2' where id_butaca=2;
+   update butacas set identificador ='A3' where id_butaca=3;
+    update butacas set identificador ='A4' where id_butaca=4;
+     update butacas set identificador ='A5' where id_butaca=5;
+      update butacas set identificador ='A6' where id_butaca=6;
+       update butacas set identificador ='A7' where id_butaca=7;
+        update butacas set identificador ='A8' where id_butaca=8;
+         update butacas set identificador ='A9' where id_butaca=9;
+          update butacas set identificador ='A10' where id_butaca=10;
+/* agregar butacas a la sala */
+insert into butacas ()values ();
+delete from butacas where id_butaca=11;
+/* ver butacas ocupadas o desocupadas de una sala*/
+select id_butaca,identificador,estado from butacas where salas_id_sala=1 and estado=0;
+/* funciones para determinada sala y fecha */
+select id_funcion,fecha,peliculas_id_pelicula,id_sala,capacidad from funciones inner join salas on salas.id_sala=2 and funciones.fecha='2022-04-07' ;
+/* ver sala y pelicula de todas las funciones*/
+select id_funcion,fecha,peliculas_id_pelicula,id_sala,capacidad,id_pelicula,nombre,director from funciones inner join salas inner join peliculas on salas.id_sala=funciones.salas_id_sala and funciones.peliculas_id_pelicula=peliculas.id_pelicula;
+
+/* mostrar todas las butacas de una funcion*/
+select * from funciones;
+
+/* en proceso */ 
+select * from vista_salas_1;
+select * from descuentos;
+update descuentos set id_descuento='7',dia='domingo',descuento=0.25 where id_descuento=7;
+select * from salas;

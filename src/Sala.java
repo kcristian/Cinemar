@@ -118,4 +118,16 @@ public class Sala {
 		return respuesta;
 	}
 	
+	public int cantidadAsientosLibres() {
+		int resultado=0;
+		
+		for(int i=0;i<asientos.size();i++) {
+			if(getAsientos().get(i).estaLibre().equals("LIBRE")) {
+				resultado++;
+			}
+		}
+		
+		return resultado;
+	}
+	
 }
