@@ -104,6 +104,14 @@ public class Reserva {
 		return num_reserva;
 	}
 	
+	public int getCantidad_butacas() {
+		return cantidad_butacas;
+	}
+
+	public void setCantidad_butacas(int cantidad_butacas) {
+		this.cantidad_butacas = cantidad_butacas;
+	}
+
 	public String toString() {
 		final String NEW_FORMAT="yyyy/MM/dd";
 		SimpleDateFormat sdf = new SimpleDateFormat(NEW_FORMAT);

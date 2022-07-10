@@ -106,7 +106,9 @@ public class Sala {
 		return resultado + "]";
 	}
 	public String toString() {
-		return "numero de sala: "+getNum_sala()+" capacidad: "+getCapacidad()+" formatos de sala: "+dameFormatos()+ describeAsientos();
+		
+		return "numero de sala: "+getNum_sala()+" capacidad: "+getCapacidad()+" formatos de sala: "+dameFormatos()+" Asientos:"+ getAsientos().toString();
+		//return "numero de sala: "+getNum_sala()+" capacidad: "+getCapacidad()+" formatos de sala: "+dameFormatos()+ describeAsientos();
 	}
 	
 	

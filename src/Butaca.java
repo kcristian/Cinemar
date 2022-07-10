@@ -50,6 +50,6 @@ public class Butaca {
 	}
 	
 	public String toString() {
-		return "butaca Nº"+getNum_butaca()+" identificador: "+getIdentificador()+" estado: "+estaLibre()+" \n";
+		return " butaca Nº"+getNum_butaca()+" identificador: "+getIdentificador()+" estado: "+estaLibre()+" \n";
 	}
 }

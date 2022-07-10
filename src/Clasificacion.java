@@ -41,6 +41,6 @@ public class Clasificacion {
 	}
 	
 	public String toString() {
-		return "numero de clasificacion: "+getNumero_clasificacion()+"identificador: "+getIdentificador()+" descripcion: "+getDescripcion();
+		return "numero de clasificacion: "+getNumero_clasificacion()+" identificador: "+getIdentificador()+" descripcion: "+getDescripcion();
 	}
 }

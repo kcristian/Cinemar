@@ -13,10 +13,20 @@ public class Cinemar_main {
 		int telefono=42228899;
 		Usuario u1=new Usuario(200,username,password,rol,email,telefono,new Date(192,7,10));
 		Cinemar c=new Cinemar();
+		
+		//probando dame pelicula y sala
 		//System.out.println(c.damePelicula(1).toString());
 		//System.out.println(c.dameSala(1).toString());
-
-		System.out.println(c.dameFuncion(2).toString());
+		
+		//probando dame funcion
+		//System.out.println(c.dameFuncion(2).toString());
+		
+		//probando dame sala
+		//System.out.println(c.dameSala(2));
+		
+		System.out.println(c.dameFuncion(1).toString());
+		
+		//System.out.println(c.dameButacas(2).toString());
 		/*probando dame actores
 		 * ArrayList<String> mis_actores;
 		mis_actores=c.dameActores(1);
@@ -33,6 +43,7 @@ public class Cinemar_main {
 		/*Datos_prueba dp=new Datos_prueba();
 		dp.iniciar();
 		System.out.println(dp.getReservas().get(0).getButacas().get(0).estaLibre());*/
+		
 		
 		//dp.getPeliculas().get(1).agregarActor("cristian");
 		//System.out.println(dp.getPeliculas().get(1).toString());

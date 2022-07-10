@@ -102,15 +102,15 @@ public class Cinemar {
 			//PASO 2: Registrar JDBC driver
 			Class.forName(cs.JDBDC_DRIVER);
 			//PASO 3: Abrir una Conexion
-			System.out.println("Conectando con la base de datos...");
+			System.out.println("Buscando usuario...");
 			conn=DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
 			//PASO 4: Ejecutar una consulta SQL
-			System.out.println("Creando el estado...");
+		
 			stmt=conn.createStatement();
 			String sql;
 			//sql="SELECT * from usuarios";
 			sql="SELECT username, password FROM usuarios WHERE username = '"+usuario+"' AND password = '"+contraseña+"'; ";
-			System.out.println(sql);
+//			System.out.println(sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			while(rs.next()) {
@@ -535,6 +535,8 @@ public class Cinemar {
 				f.setFecha(fecha_funcion);
 				System.out.println("buscando sala..");
 				f.setSala_funcion(dameSala(id_de_sala));
+				System.out.println("buscando butacas..");
+				f.getSala_funcion().setAsientos(dameButacas(id_de_sala));
 				System.out.println("buscando pelicula");
 				f.setPelicula(damePelicula(id_de_pelicula));
 			}
@@ -563,10 +565,216 @@ public class Cinemar {
 			
 		}
 		System.out.println("Adios!..");
-		
+				
 		return f;
 	}
 	
+	public Reserva dameReserva(int id_reserva) {
+		
+		Reserva r=new Reserva();
+		int id_de_reserva=1;
+		Date fecha_reserva = null;
+		int cantidad=1;
+		int id_descuento=1;
+		int id_usuario=1;
+		int id_funcion=1;
+		int id_sala=1;
+		int id_pelicula=1;
+		Connection conn=null;
+		Statement stmt=null;
+		
+		try {
+			//PASO 2: Registrar JDBC driver
+			Class.forName(cs.JDBDC_DRIVER);
+			//PASO 3: Abrir una Conexion
+			System.out.println("Conectando con la base de datos...");
+			conn=DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
+			//PASO 4: Ejecutar una consulta SQL
+			System.out.println("Creando el estado...");
+			stmt=conn.createStatement();
+			String sql;
+			System.out.println("se buscara la funcion");
+			sql= "SELECT id_reserva, fecha, cantidad, descuento,usuarios_id_usuario, funciones_id_funcion, funciones_salas_id_sala, funciones_peliculas_id_pelicula "
+					+ "FROM reservas WHERE id_reserva="+id_reserva+";";
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			
+			while(rs.next()) {
+				//capturando datos de funcion
+				id_de_reserva=rs.getInt("id_reserva");
+				fecha_reserva=rs.getDate("fecha");
+				cantidad=rs.getInt("cantidad");
+				id_descuento=rs.getInt("descuento");
+				id_usuario=rs.getInt("usuarios_id_usuario");
+				id_funcion=rs.getInt("funciones_id_funcion");
+				id_sala=rs.getInt("funciones_salas_id_sala");
+				id_pelicula=rs.getInt("funciones_peliculas_id_pelicula");
+				
+			}
+			rs.close();
+			stmt.close();
+			conn.close();
+			
+		} catch (SQLException se) {
+			// Resolver errores para JDBC
+			se.printStackTrace();
+		} catch(Exception e) {
+			// Resolver errores para Class.forName
+			e.printStackTrace();
+		}finally {
+			try {
+				if(stmt!=null)
+					stmt.close();
+			}catch(SQLException se2) {
+			}
+			try {
+				if(conn!=null)
+					conn.close();
+			}catch(SQLException se) {
+				se.printStackTrace();
+			}
+			
+		}
+		System.out.println("Adios!..");
+		r.setNum_reserva(id_de_reserva);
+		r.setFecha_reserva(fecha_reserva);
+		r.setCantidad_butacas(cantidad);
+		r.setDescuento(dameDescuento(id_descuento));
+		r.setUsuario(dameUsuarioPorId(id_usuario));
+		r.setFuncion(dameFuncion(id_funcion));
+		
+		return r;
+		
+	}
+	
+	public float dameDescuento(int id_descuento) {
+		float respuesta=0f;
+		
+		Connection conn=null;
+		Statement stmt=null;
+		
+		try {
+			System.out.println("buscando el usuario por id..");
+			//PASO 2: Registrar JDBC driver
+			Class.forName(cs.JDBDC_DRIVER);
+			//PASO 3: Abrir una Conexion
+			
+			conn=DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
+			//PASO 4: Ejecutar una consulta SQL
+			
+			stmt=conn.createStatement();
+			String sql;
+			
+			sql="SELECT descuento FROM descuentos WHERE id_descuento="+id_descuento+"";
+			
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				//Recibir datos de descuentos
+				respuesta=rs.getFloat("descuento");
+			}
+			rs.close();
+			stmt.close();
+			conn.close();
+			
+		} catch (SQLException se) {
+			// Resolver errores para JDBC
+			se.printStackTrace();
+		} catch(Exception e) {
+			// Resolver errores para Class.forName
+			e.printStackTrace();
+		}finally {
+			try {
+				if(stmt!=null)
+					stmt.close();
+			}catch(SQLException se2) {
+			}
+			try {
+				if(conn!=null)
+					conn.close();
+			}catch(SQLException se) {
+				se.printStackTrace();
+			}
+			
+		}
+		return respuesta;
+	}
+	
+	public Usuario dameUsuarioPorId(int id_usuario) {
+		Usuario usuario=new Usuario();
+		
+		Connection conn=null;
+		Statement stmt=null;
+		
+		try {
+			System.out.println("buscando el usuario por id..");
+			//PASO 2: Registrar JDBC driver
+			Class.forName(cs.JDBDC_DRIVER);
+			//PASO 3: Abrir una Conexion
+			
+			conn=DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
+			//PASO 4: Ejecutar una consulta SQL
+			
+			stmt=conn.createStatement();
+			String sql;
+			
+			sql="SELECT id_usuario, rol, username, password,email,fecha_nacimiento,telefono,fecha_registro FROM"
+					+ " usuarios WHERE id_usuario= "+id_usuario+";";
+			//sql="SELECT username, password FROM usuarios WHERE username = '"+usuario+"' AND password = '"+contraseña+"'; ";
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				//Recibir datos funciones y nombre de pelicula
+				int user_id=rs.getInt("id_usuario");
+				String rol=rs.getString("rol");
+				String nombre_usuario=rs.getString("username");
+				String password_usuario=rs.getString("password");
+				String email_usuario=rs.getString("email");
+				java.util.Date fecha_nacimiento=rs.getTimestamp("fecha_nacimiento");
+				int telefono_usuario=rs.getInt("telefono");
+				java.util.Date fecha_registro=rs.getTimestamp("fecha_registro");
+				
+				
+				//usuario=new Usuario(user_id,nombre_usuario,password_usuario,rol,email_usuario,telefono_usuario);
+				usuario.setUserid(user_id);
+				usuario.setRol_usuario(rol);
+				usuario.setUsername(nombre_usuario);
+				usuario.setPassword(password_usuario);
+				usuario.setEmail(email_usuario);
+				usuario.setTelefono(telefono_usuario);
+				
+				usuario.setFecha_nacimiento(fecha_nacimiento);
+				usuario.setFecha_alta(fecha_registro);
+				
+			}
+			rs.close();
+			stmt.close();
+			conn.close();
+			
+		} catch (SQLException se) {
+			// Resolver errores para JDBC
+			se.printStackTrace();
+		} catch(Exception e) {
+			// Resolver errores para Class.forName
+			e.printStackTrace();
+		}finally {
+			try {
+				if(stmt!=null)
+					stmt.close();
+			}catch(SQLException se2) {
+			}
+			try {
+				if(conn!=null)
+					conn.close();
+			}catch(SQLException se) {
+				se.printStackTrace();
+			}
+			
+		}
+		System.out.println("Adios!..");
+		
+		return usuario;
+	}
 	public void mostrarmisReservas(int id_de_usuario) {
 		
 		Connection conn=null;

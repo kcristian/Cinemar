@@ -58,7 +58,7 @@ public class Funcion {
 		SimpleDateFormat sdf = new SimpleDateFormat(NEW_FORMAT);
 		
 		return "id funcion: "+ getId_funcion()+ " Fecha: "+ sdf.format(getFecha())+ " Horario: "+sdf.format(getFecha()) + " en sala: "+
-				getSala_funcion().getNum_sala()+" pelicula: "+getPelicula().getNombre();
+				getSala_funcion().toString()+" pelicula: "+getPelicula().toString();
 	}
 	
 	public boolean hayLugares(int cantidad_req) {
