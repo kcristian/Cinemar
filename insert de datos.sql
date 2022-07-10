@@ -133,7 +133,7 @@ select * from funciones;
 
 select  actores.nombre, actores.apellido from actores inner join reparto inner join peliculas on peliculas.reparto = reparto.id_reparto where id_pelicula=1; 
 describe reparto;
-describe peliculas;
+select * from usuarios;
 
 select * from salas;
 select * from formato_salas;
@@ -241,6 +241,6 @@ select id_butaca,identificador,estado from butacas where salas_id_sala=2;
 select id_funcion,fecha,salas_id_sala,peliculas_id_pelicula from funciones;
 
 select id_reserva, fecha, cantidad, descuento,usuarios_id_usuario, funciones_id_funcion, funciones_salas_id_sala, funciones_peliculas_id_pelicula from reservas where id_reserva=3;
-select * from peliculas;
+select * from reservas;
 /*ultimo insert de iron man*/
 insert into peliculas(id_pelicula,nombre,sinopsis,duracion,director) values(3,'IRON MAN','el hombre de acero',126,'Jon Favreau');

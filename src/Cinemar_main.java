@@ -13,7 +13,7 @@ public class Cinemar_main {
 		int telefono=42228899;
 		Usuario u1=new Usuario(200,username,password,rol,email,telefono,new Date(192,7,10));
 		Cinemarsql c=new Cinemarsql();
-		
+		//DATOS PARA PROBAR USUARIO: cristian9 Y CONTRASEÑA: cristian22
 		Tablero t=new Tablero();
 		t.Iniciar();
 		
