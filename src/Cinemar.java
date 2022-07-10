@@ -280,6 +280,7 @@ public class Cinemar {
 		return usuario;
 	}
 	
+	
 	public void mostrarFunciones() {
 		
 		Connection conn=null;
@@ -367,9 +368,7 @@ public class Cinemar {
 				 String sql = "insert into reservas values("+id_reserva+",'"+fecha+"',"+cantidad+","+id_descuento+","+id_usuario+","+id_funcion+","+id_sala+","+id_pelicula+")";
 				 stmt.executeUpdate(sql);
 				 System.out.println("Valores Insertados con Exito en tabla reservas");
-				 //sql =  MessageFormat.format("INSERT INTO productos (stock, precio, rubro) VALUES ({0}, {1}, {2});", stock, precio, rubro);
-				 //stmt.executeUpdate(sql);
-				 //System.out.println("Valores Insertados con Exito en tabla productos");
+				 
 				 
 				 //PASO6: Entorno de Limpieza
 				 stmt.close();
@@ -572,8 +571,80 @@ public class Cinemar {
 		System.out.println("Adios!..");
 	}
 	
-	public Pelicula mostrarPelicula (int id_pelicula) {
+	public Pelicula damePelicula (int id_pelicula) {
 		Pelicula pelicula = new Pelicula();
+		Connection conn=null;
+		Statement stmt=null;
+		System.out.println("se buscara pelicula");
+		try {
+			//PASO 2: Registrar JDBC driver
+			Class.forName(cs.JDBDC_DRIVER);
+			//PASO 3: Abrir una Conexion
+			System.out.println("Conectando con la base de datos...");
+			conn=DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
+			//PASO 4: Ejecutar una consulta SQL
+			System.out.println("Creando el estado...");
+			stmt=conn.createStatement();
+			String sql;
+			
+			sql= "SELECT id_pelicula, nombre,sinopsis, duracion,  director,reparto FROM peliculas WHERE id_pelicula = '"+id_pelicula+"'";
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				//Recibir datos funciones y nombre de pelicula
+				int id_peli = rs.getInt("id_pelicula");
+				String nombre_pelicula = rs.getString("nombre");
+				String sinop_pelicula = rs.getString("sinopsis");
+				int duracion_peli=rs.getInt("duracion");
+				String direct_pelicula = rs.getString("director");
+				int id_reparto=rs.getInt("reparto");
+				
+				
+				pelicula.setNum_pelicula(id_peli);
+				pelicula.setNombre(nombre_pelicula);
+				pelicula.setSinopsis(sinop_pelicula);
+				pelicula.setDuracion(duracion_peli);
+				pelicula.setDirector(direct_pelicula);
+				
+			}
+			rs.close();
+			stmt.close();
+			conn.close();
+			
+		} catch (SQLException se) {
+			// Resolver errores para JDBC
+			se.printStackTrace();
+		} catch(Exception e) {
+			// Resolver errores para Class.forName
+			e.printStackTrace();
+		}finally {
+			try {
+				if(stmt!=null)
+					stmt.close();
+			}catch(SQLException se2) {
+			}
+			try {
+				if(conn!=null)
+					conn.close();
+			}catch(SQLException se) {
+				se.printStackTrace();
+			}
+			
+		}
+		System.out.println("se buscara generos");
+		pelicula.setGeneros(dameGenero(id_pelicula));
+		System.out.println("se buscara actores del reparto");
+		pelicula.setReparto(dameActores(id_pelicula));
+		System.out.println("se buscara clasificacion");
+		pelicula.setClasificacion(dameClasificacion(id_pelicula));
+		System.out.println("se buscara tipos de pelicula");
+		pelicula.setTipos(dameTiposPelicula(id_pelicula));
+		
+		return pelicula;
+	}
+	public ArrayList<TipoPelicula> dameTiposPelicula(int id_pelicula){
+		ArrayList<TipoPelicula> tipos = new ArrayList<>();
+		TipoPelicula tp=new TipoPelicula();
 		Connection conn=null;
 		Statement stmt=null;
 		
@@ -588,20 +659,79 @@ public class Cinemar {
 			stmt=conn.createStatement();
 			String sql;
 			
-			sql= "SELECT id_pelicula, nombre,sinopsis, director FROM peliculas WHERE id_pelicula = '"+id_pelicula+"'";
+			sql= "select id_tipo, formato, idioma, subtitulos,peliculas_id_pelicula from tipo_peliculas where peliculas_id_pelicula="+id_pelicula+";";
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			while(rs.next()) {
 				//Recibir datos funciones y nombre de pelicula
-				int peli = rs.getInt("id_pelicula");
-				String nombre_pelicula = rs.getString("nombre");
-				String sinop_pelicula = rs.getString("sinopsis");
-				String direct_pelicula = rs.getString("director");
+				int numero_tipo_peli = rs.getInt("id_tipo");
+				String formato_tipo_peli = rs.getString("formato");
+				String idioma_tipo_peli = rs.getString("idioma");
+				String sub_tipo_peli = rs.getString("subtitulos");
+				int id_de_pelicula =rs.getInt("peliculas_id_pelicula");
 				
-				System.out.println("Nombre de Pelicula: "+ nombre_pelicula);
-				System.out.println("Sinopsis: "+ sinop_pelicula);
-				System.out.println("Director: "+ direct_pelicula);
+				tipos.add(new TipoPelicula(numero_tipo_peli,formato_tipo_peli,idioma_tipo_peli,sub_tipo_peli));
 				
+			}
+			rs.close();
+			stmt.close();
+			conn.close();
+			
+		} catch (SQLException se) {
+			// Resolver errores para JDBC
+			se.printStackTrace();
+		} catch(Exception e) {
+			// Resolver errores para Class.forName
+			e.printStackTrace();
+		}finally {
+			try {
+				if(stmt!=null)
+					stmt.close();
+			}catch(SQLException se2) {
+			}
+			try {
+				if(conn!=null)
+					conn.close();
+			}catch(SQLException se) {
+				se.printStackTrace();
+			}
+			
+		}
+		System.out.println("Adios!..");
+		
+		return tipos;
+	}
+	
+	
+	public Clasificacion dameClasificacion(int id_pelicula) {
+		Clasificacion clasificacion = new Clasificacion();
+		Connection conn=null;
+		Statement stmt=null;
+		
+		try {
+			//PASO 2: Registrar JDBC driver
+			Class.forName(cs.JDBDC_DRIVER);
+			//PASO 3: Abrir una Conexion
+			System.out.println("Conectando con la base de datos...");
+			conn=DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
+			//PASO 4: Ejecutar una consulta SQL
+			System.out.println("Creando el estado...");
+			stmt=conn.createStatement();
+			String sql;
+			
+			sql= "SELECT id_clasificacion, identificador,descripcion, peliculas_id_pelicula FROM clasificacion_peliculas WHERE peliculas_id_pelicula = '"+id_pelicula+"'";
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				//Recibir datos funciones y nombre de pelicula
+				int id_clasifc= rs.getInt("id_clasificacion");
+				String identif_clasif = rs.getString("identificador");
+				String desc_clasif = rs.getString("descripcion");
+				int pel_id_pelicula = rs.getInt("peliculas_id_pelicula");
+				
+				clasificacion.setNumero_clasificacion(id_clasifc);
+				clasificacion.setIdentificador(identif_clasif);
+				clasificacion.setDescripcion(desc_clasif);
 				
 				
 			}
@@ -632,7 +762,7 @@ public class Cinemar {
 		System.out.println("Adios!..");
 
 		
-		return pelicula;
+		return clasificacion;
 	}
 	
 	public ArrayList<Genero> dameGenero(int id_de_pelicula){
@@ -999,12 +1129,12 @@ public class Cinemar {
 			System.out.println("Creando el estado...");
 			stmt=conn.createStatement();
 			String sql;
-			sql="INSERT INTO butacas VALUES("+id_butaca+","+id_sala+");";
+			sql="INSERT INTO butacas(id_butaca,salas_id_sala) VALUES("+id_butaca+","+id_sala+");";
 			
 			System.out.println(sql);
-			ResultSet rs = stmt.executeQuery(sql);
+			stmt.executeUpdate(sql);
+			System.out.println("se inserto una butaca");
 			
-			rs.close();
 			stmt.close();
 			conn.close();
 			
@@ -1031,6 +1161,10 @@ public class Cinemar {
 		System.out.println("Adios!..");
 	}
 	
+	public void reservarButaca(int id_sala) {
+		
+		
+	}
 	public void crearPelicula(int id_pelicula,String nombre_pelicula,String sinopsis,int duracion,String director) {
 		
 	}
@@ -1247,6 +1381,6 @@ public class Cinemar {
 		System.out.println("Adios!..");
 	}
 
-	
+
 	
 }

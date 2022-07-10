@@ -13,9 +13,8 @@ public class Cinemar_main {
 		int telefono=42228899;
 		Usuario u1=new Usuario(200,username,password,rol,email,telefono,new Date(192,7,10));
 		Cinemar c=new Cinemar();
-		for(int i=11;i<=21;i++) {
-			c.crearButaca(i, 2);
-		}
+		//System.out.println(c.damePelicula(1).toString());
+		
 
 		
 		/*probando dame actores

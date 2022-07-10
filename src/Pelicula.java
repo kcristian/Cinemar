@@ -8,11 +8,12 @@ public class Pelicula {
 	private int duracion;
 	private String director;
 	private ArrayList<String> reparto;
-	private ArrayList<Genero> generos;
-	private Clasificacion clasificacion;
-	private TipoPelicula tipo;
 	
-	Pelicula(int num_pelicula, String nombre,Clasificacion cl,TipoPelicula tipo,Genero genero,int duracion){
+	private ArrayList<Genero> generos; 
+	private Clasificacion clasificacion;
+	private ArrayList<TipoPelicula> tipos;
+	
+	Pelicula(int num_pelicula, String nombre,Clasificacion cl,TipoPelicula tipo,Genero genero,int duracion,TipoPelicula tp){
 		
 		this.num_pelicula= num_pelicula;
 		this.nombre=nombre;
@@ -23,7 +24,8 @@ public class Pelicula {
 		this.reparto.add("-");
 		this.director="-";
 		this.clasificacion=cl;
-		this.tipo=tipo;
+		this.tipos=new ArrayList<>();
+		this.tipos.add(tp);
 		this.duracion=duracion;
 	}
 
@@ -82,12 +84,14 @@ public class Pelicula {
 		this.clasificacion = clasificacion;
 	}
 
-	public TipoPelicula getTipo() {
-		return tipo;
+
+
+	public ArrayList<TipoPelicula> getTipos() {
+		return tipos;
 	}
 
-	public void setTipo(TipoPelicula tipo) {
-		this.tipo = tipo;
+	public void setTipos(ArrayList<TipoPelicula> tipos) {
+		this.tipos = tipos;
 	}
 
 	public int getNum_pelicula() {
@@ -128,9 +132,20 @@ public class Pelicula {
 		
 		return resultado + " ]";
 	}
+	
+	public String dameTipos() {
+		String resultado="[ ";
+		
+		for(int i=0;i<tipos.size();i++) {
+			String valor= getTipos().get(i).getFormato()+"/"+getTipos().get(i).getIdioma()+"/"+getTipos().get(i).isSubtitulada();
+			resultado=resultado+valor;
+		}
+		
+		return resultado +" ]";
+	}
 	public String toString() {
 		return "numero pelicula: "+ getNum_pelicula()+ " nombre: "+ getNombre() + " sinopsis: " + getSinopsis() + " duracion: "+ getDuracion() +
 				" director: "+ getDirector()+ "\n"+ " reparto: "+ dameReparto() +"\n"+ " genero: " + dameGeneros() +"\n"+ 
-				"clasificacion: "+getClasificacion().toString()+" tipo de pelicula: "+ getTipo().toString();
+				"clasificacion: "+getClasificacion().toString()+" tipo de pelicula: "+ dameTipos();
 	}
 }

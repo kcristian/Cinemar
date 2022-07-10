@@ -1,12 +1,27 @@
 
 public class Clasificacion {
 	
+	private int numero_clasificacion;
 	private String identificador;
 	private String descripcion;
 	
-	public Clasificacion(String identificador,String descripcion) {
+	public Clasificacion(int numero_clasificacion, String identificador,String descripcion) {
+		this.numero_clasificacion=numero_clasificacion;
 		this.identificador=identificador;
 		this.descripcion=descripcion;
+	}
+	
+	public Clasificacion() {
+		
+	}
+	
+	
+	public int getNumero_clasificacion() {
+		return numero_clasificacion;
+	}
+
+	public void setNumero_clasificacion(int numero_clasificacion) {
+		this.numero_clasificacion = numero_clasificacion;
 	}
 
 	public String getIdentificador() {
@@ -26,6 +41,6 @@ public class Clasificacion {
 	}
 	
 	public String toString() {
-		return "identificador: "+getIdentificador()+" descripcion: "+getDescripcion();
+		return "numero de clasificacion: "+getNumero_clasificacion()+"identificador: "+getIdentificador()+" descripcion: "+getDescripcion();
 	}
 }

@@ -1,15 +1,29 @@
 
 public class TipoPelicula {
 	
+	private int numero_tipo;
 	private String formato; 
 	private String idioma;
-	private boolean subtitulada;
+	private String subtitulos;
 	
-	public TipoPelicula(String formato, String idioma, boolean subtitulada) {
+	public TipoPelicula(int numero_tipo,String formato, String idioma, String subtitulos) {
 		
+		this.numero_tipo=numero_tipo;
 		this.formato=formato;
 		this.idioma=idioma;
-		this.subtitulada=subtitulada;
+		this.subtitulos=subtitulos;
+	}
+	
+	public TipoPelicula() {
+		
+	}
+
+	public int getNumero_tipo() {
+		return numero_tipo;
+	}
+
+	public void setNumero_tipo(int numero_tipo) {
+		this.numero_tipo = numero_tipo;
 	}
 
 	public String getFormato() {
@@ -29,15 +43,15 @@ public class TipoPelicula {
 	}
 
 	public String isSubtitulada() {
-		if(this.subtitulada==true) {
-			return "Con subtitulos";
-		}else {
+		if(this.subtitulos.equals("NINGUNO")) {
 			return "Sin subtitulos";
+		}else {
+			return "Con subtitulos";
 		}
 	}
 
-	public void setSubtitulada(boolean subtitulada) {
-		this.subtitulada = subtitulada;
+	public void setSubtitulada(String subtitulada) {
+		this.subtitulos = subtitulada;
 	}
 	
 	public String toString() {
