@@ -14,9 +14,9 @@ public class Cinemar_main {
 		Usuario u1=new Usuario(200,username,password,rol,email,telefono,new Date(192,7,10));
 		Cinemar c=new Cinemar();
 		//System.out.println(c.damePelicula(1).toString());
-		
+		//System.out.println(c.dameSala(1).toString());
 
-		
+		System.out.println(c.dameFuncion(2).toString());
 		/*probando dame actores
 		 * ArrayList<String> mis_actores;
 		mis_actores=c.dameActores(1);

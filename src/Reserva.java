@@ -31,6 +31,10 @@ public class Reserva {
 		}
 		
 	}
+	
+	public Reserva() {
+		
+	}
 
 	public Date getFecha_reserva() {
 		return fecha_reserva;

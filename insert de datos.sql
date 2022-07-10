@@ -208,3 +208,22 @@ select * from vista_salas_1;
 select * from descuentos;
 update descuentos set id_descuento='7',dia='domingo',descuento=0.25 where id_descuento=7;
 select * from salas;
+
+/* reservar una butaca*/
+select * from peliculas;
+update butacas set estado=1 where salas_id_sala=0;
+
+/* ver clasificacion de una pelicula*/
+select id_tipo, formato, idioma, subtitulos,peliculas_id_pelicula from tipo_peliculas where peliculas_id_pelicula=2;
+describe tipo_peliculas;
+SELECT id_clasificacion, identificador,descripcion, peliculas_id_pelicula FROM clasificacion_peliculas WHERE peliculas_id_pelicula = 2;
+
+select * from salas_tienen_formato_salas;
+select * from formato_salas;
+select * from salas;
+/* mostrar informacion de una sala segun id ingresado*/
+select id_sala,capacidad,id_formato,identificador,descripcion,precio from salas inner join salas_tienen_formato_salas inner join formato_salas  on salas.id_sala= salas_tienen_formato_salas.salas_id_sala 
+and salas_tienen_formato_salas.formato_salas_id_formato=formato_salas.id_formato where salas.id_sala=1;
+
+select id_sala,capacidad,id_formato,identificador,descripcion,precio from salas inner join salas_tienen_formato_salas inner join formato_salas  on salas.id_sala= salas_tienen_formato_salas.salas_id_sala 
+and salas_tienen_formato_salas.formato_salas_id_formato=formato_salas.id_formato where salas.id_sala=1;

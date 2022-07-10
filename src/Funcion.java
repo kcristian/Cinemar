@@ -15,6 +15,10 @@ public class Funcion {
 		this.sala_funcion=sala;
 		this.pelicula=pelicula;
 	}
+	
+	public Funcion() {
+		
+	}
 
 	public Date getFecha() {
 		return fecha;

@@ -502,6 +502,70 @@ public class Cinemar {
 		}
 		System.out.println("Adios!..");
 	}
+	public Funcion dameFuncion(int id_funcion) {
+		
+		Funcion f=new Funcion();
+				
+		Connection conn=null;
+		Statement stmt=null;
+		
+		try {
+			//PASO 2: Registrar JDBC driver
+			Class.forName(cs.JDBDC_DRIVER);
+			//PASO 3: Abrir una Conexion
+			System.out.println("Conectando con la base de datos...");
+			conn=DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
+			//PASO 4: Ejecutar una consulta SQL
+			System.out.println("Creando el estado...");
+			stmt=conn.createStatement();
+			String sql;
+			System.out.println("se buscara la funcion");
+			sql= "SELECT id_funcion,fecha,salas_id_sala,peliculas_id_pelicula FROM funciones WHERE id_funcion="+id_funcion+";";
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			
+			while(rs.next()) {
+				//capturando datos de funcion
+				int id_de_funcion=rs.getInt("id_funcion");
+				Date fecha_funcion=rs.getDate("fecha");
+				int id_de_sala=rs.getInt("salas_id_sala");
+				int id_de_pelicula=rs.getInt("peliculas_id_pelicula");
+				
+				f.setId_funcion(id_de_funcion);
+				f.setFecha(fecha_funcion);
+				System.out.println("buscando sala..");
+				f.setSala_funcion(dameSala(id_de_sala));
+				System.out.println("buscando pelicula");
+				f.setPelicula(damePelicula(id_de_pelicula));
+			}
+			rs.close();
+			stmt.close();
+			conn.close();
+			
+		} catch (SQLException se) {
+			// Resolver errores para JDBC
+			se.printStackTrace();
+		} catch(Exception e) {
+			// Resolver errores para Class.forName
+			e.printStackTrace();
+		}finally {
+			try {
+				if(stmt!=null)
+					stmt.close();
+			}catch(SQLException se2) {
+			}
+			try {
+				if(conn!=null)
+					conn.close();
+			}catch(SQLException se) {
+				se.printStackTrace();
+			}
+			
+		}
+		System.out.println("Adios!..");
+		
+		return f;
+	}
 	
 	public void mostrarmisReservas(int id_de_usuario) {
 		
@@ -789,8 +853,7 @@ public class Cinemar {
 				//Recibir datos funciones y nombre de pelicula
 				int numero_genero = rs.getInt("id_genero_pelicula");
 				String nombre_genero = rs.getString("genero_peliculas.nombre");
-				System.out.println("numero: "+ numero_genero);
-				System.out.println("nombre: "+ nombre_genero);
+				
 				//g.setNumero_genero(numero_genero);
 				//g.setNombre(nombre_genero);
 				generos.add(new Genero(numero_genero, nombre_genero));
@@ -948,7 +1011,125 @@ public class Cinemar {
 		}
 		System.out.println("Adios!..");
     }
-
+	
+	public Sala dameSala(int id_sala) {
+		Sala s=new Sala();
+		
+		Connection conn=null;
+		Statement stmt=null;
+		System.out.println("se buscara pelicula");
+		try {
+			//PASO 2: Registrar JDBC driver
+			Class.forName(cs.JDBDC_DRIVER);
+			//PASO 3: Abrir una Conexion
+			System.out.println("Conectando con la base de datos...");
+			conn=DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
+			//PASO 4: Ejecutar una consulta SQL
+			System.out.println("Creando el estado...");
+			stmt=conn.createStatement();
+			String sql;
+			
+			sql= "select id_sala,capacidad,identificador from salas inner join salas_tienen_formato_salas inner join formato_salas \r\n"
+					+ "on salas.id_sala=salas_tienen_formato_salas.salas_id_sala and salas_tienen_formato_salas.formato_salas_id_formato=formato_salas.id_formato where salas.id_sala="+id_sala+" ;";
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				//Recibir datos funciones y nombre de pelicula
+				int id_de_sala=rs.getInt("id_sala");
+				int capacidad=rs.getInt("capacidad");
+				String identificador=rs.getString("identificador");
+				
+				s.setNum_sala(id_de_sala);
+				s.setCapacidad(capacidad);
+				s.getFormato_de_sala().add(identificador);
+				//*?											
+			}
+			rs.close();
+			stmt.close();
+			conn.close();
+			
+		} catch (SQLException se) {
+			// Resolver errores para JDBC
+			se.printStackTrace();
+		} catch(Exception e) {
+			// Resolver errores para Class.forName
+			e.printStackTrace();
+		}finally {
+			try {
+				if(stmt!=null)
+					stmt.close();
+			}catch(SQLException se2) {
+			}
+			try {
+				if(conn!=null)
+					conn.close();
+			}catch(SQLException se) {
+				se.printStackTrace();
+			}
+			
+		}
+		System.out.println("se buscara asientos");
+		s.setAsientos(dameButacas(id_sala));
+		
+		return s;
+	}
+	public ArrayList<Butaca> dameButacas(int id_sala){
+		ArrayList<Butaca> las_butacas=new ArrayList<>();
+		
+		Connection conn=null;
+		Statement stmt=null;
+		System.out.println("se buscaran las butacas");
+		try {
+			//PASO 2: Registrar JDBC driver
+			Class.forName(cs.JDBDC_DRIVER);
+			//PASO 3: Abrir una Conexion
+			System.out.println("Conectando con la base de datos...");
+			conn=DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
+			//PASO 4: Ejecutar una consulta SQL
+			System.out.println("Creando el estado...");
+			stmt=conn.createStatement();
+			String sql;
+			
+			sql= "SELECT id_butaca,identificador,estado FROM butacas WHERE salas_id_sala="+id_sala+";";
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				//Recibir datos funciones y nombre de pelicula
+				int id_de_butaca=rs.getInt("id_butaca");
+				String identificador=rs.getString("identificador");
+				boolean estado=rs.getBoolean("estado");
+				Butaca b=new Butaca();
+				b.setNum_butaca(id_de_butaca);
+				b.setIdentificador(identificador);
+				b.setEstado(estado);
+				las_butacas.add(b);
+			}
+			rs.close();
+			stmt.close();
+			conn.close();
+			
+		} catch (SQLException se) {
+			// Resolver errores para JDBC
+			se.printStackTrace();
+		} catch(Exception e) {
+			// Resolver errores para Class.forName
+			e.printStackTrace();
+		}finally {
+			try {
+				if(stmt!=null)
+					stmt.close();
+			}catch(SQLException se2) {
+			}
+			try {
+				if(conn!=null)
+					conn.close();
+			}catch(SQLException se) {
+				se.printStackTrace();
+			}
+		}
+		
+		return las_butacas;
+	}
 	//ADMINISTRACION
 	
 	public void verTodaslasReservas() {

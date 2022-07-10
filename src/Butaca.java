@@ -2,14 +2,19 @@
 public class Butaca {
 
 	private int num_butaca;
+	private String identificador;
 	private boolean estado;
 	
-	public Butaca(int num_butaca) {
+	public Butaca(int num_butaca,String identificador) {
 		
 		this.num_butaca=num_butaca;
+		this.identificador=identificador;
 		this.estado=false;
 	}
-
+	
+	public Butaca() {
+		
+	}
 	public int getNum_butaca() {
 		return num_butaca;
 	}
@@ -26,6 +31,14 @@ public class Butaca {
 		this.estado=estado;
 	}
 	
+	public String getIdentificador() {
+		return identificador;
+	}
+
+	public void setIdentificador(String identificador) {
+		this.identificador = identificador;
+	}
+
 	public String estaLibre() {
 		String respuesta="LIBRE";
 		
@@ -37,6 +50,6 @@ public class Butaca {
 	}
 	
 	public String toString() {
-		return "butaca Nº"+getNum_butaca()+" estado: "+estaLibre()+" \n";
+		return "butaca Nº"+getNum_butaca()+" identificador: "+getIdentificador()+" estado: "+estaLibre()+" \n";
 	}
 }

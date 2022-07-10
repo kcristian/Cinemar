@@ -13,14 +13,15 @@ public class Sala {
 		this.num_sala=num_sala;
 		this.capacidad=capacidad;
 		this.asientos=new ArrayList<>();
-		for(int i=ultimo_num_butaca+1;i<=ultimo_num_butaca+this.capacidad;i++){
-			asientos.add(new Butaca(i));
-		}
 		this.formato_de_sala=new ArrayList<>();
 		formato_de_sala.add("2D");
 		this.precio_entrada=700;
 	}
-
+	
+	public Sala() {
+		this.asientos=new ArrayList<>();
+		this.formato_de_sala=new ArrayList<>();
+	}
 	public int getNum_sala() {
 		return num_sala;
 	}
@@ -105,8 +106,10 @@ public class Sala {
 		return resultado + "]";
 	}
 	public String toString() {
-		return "numero de sala: "+getNum_sala()+" capacidad: "+getCapacidad()+" formatos de sala: "+dameFormatos()+ describeAsientos()+ "precio butaca: "+getPrecio_entrada();
+		return "numero de sala: "+getNum_sala()+" capacidad: "+getCapacidad()+" formatos de sala: "+dameFormatos()+ describeAsientos();
 	}
+	
+	
 	public boolean ExisteButaca(int numero_butaca) {
 		boolean respuesta=false;
 		for(int i=0;i<asientos.size();i++) {
