@@ -80,21 +80,23 @@ public class Datos_prueba {
 		usuarios.add(u5);
 		
 		// Creando peliculas
+		// int num_pelicula, String nombre,Clasificacion cl,TipoPelicula tipo,Genero genero,int duracion
 		
-		Pelicula p1= new Pelicula(1,"V de Venganza", new Clasificacion("M18","mayores de 18 años"),
-				new TipoPelicula("2D","Ingles",true), new Genero(1,"Accion"), 130);
 		
-		Pelicula p2= new Pelicula(2,"Sonic", new Clasificacion("ATP","Apta para todo publico"),
-				new TipoPelicula("3D","Latino",false), new Genero(2, "Aventura"), 90);
+		Pelicula p1= new Pelicula(1,"V de Venganza", new Clasificacion(1,"M18","mayores de 18 años"),
+				new TipoPelicula(1,"2D","Ingles","ESPAÑOL"),new Genero(1,"Accion"), 130);
 		
-		Pelicula p3= new Pelicula(3,"Spiderman", new Clasificacion("ATP","Apta para todo publico"),
-				new TipoPelicula("2D","Latino",false), new Genero(3, "Ciencia Ficcion"), 120);
+		Pelicula p2= new Pelicula(2,"Sonic", new Clasificacion(2,"ATP","Apta para todo publico"),
+				new TipoPelicula(2,"3D","Latino","NINGUNO"), new Genero(2, "Aventura"), 90);
 		
-		Pelicula p4= new Pelicula(4, "Dr Strange", new Clasificacion("ATP","Apta para todo publico"),
-				new TipoPelicula("3D","Ingles",true), new Genero(4, "Aventura"), 120);
+		Pelicula p3= new Pelicula(3,"Spiderman", new Clasificacion(2,"ATP","Apta para todo publico"),
+				new TipoPelicula(3,"2D","Latino","NINGUNO"), new Genero(3, "Ciencia Ficcion"), 120);
 		
-		Pelicula p5= new Pelicula(5, "Red Liberty", new Clasificacion("M18","mayores de 18 años"),
-				new TipoPelicula("3D","Ingles",true), new Genero(5, "Ciencia Ficcion"), 110);
+		Pelicula p4= new Pelicula(4, "Dr Strange", new Clasificacion(2,"ATP","Apta para todo publico"),
+				new TipoPelicula(4,"3D","Ingles","NINGUNO"), new Genero(4, "Aventura"), 120);
+		
+		Pelicula p5= new Pelicula(5, "Red Liberty", new Clasificacion(1,"M18","mayores de 18 años"),
+				new TipoPelicula(5,"3D","Ingles","ESPAÑOL"), new Genero(5, "Ciencia Ficcion"), 110);
 		
 		peliculas.add(p1);
 		peliculas.add(p2);

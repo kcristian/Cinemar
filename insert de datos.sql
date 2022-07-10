@@ -225,5 +225,22 @@ select * from salas;
 select id_sala,capacidad,id_formato,identificador,descripcion,precio from salas inner join salas_tienen_formato_salas inner join formato_salas  on salas.id_sala= salas_tienen_formato_salas.salas_id_sala 
 and salas_tienen_formato_salas.formato_salas_id_formato=formato_salas.id_formato where salas.id_sala=1;
 
-select id_sala,capacidad,id_formato,identificador,descripcion,precio from salas inner join salas_tienen_formato_salas inner join formato_salas  on salas.id_sala= salas_tienen_formato_salas.salas_id_sala 
-and salas_tienen_formato_salas.formato_salas_id_formato=formato_salas.id_formato where salas.id_sala=1;
+/* mostrar informacion de una sala segun id ingresado, incluido butacas*/
+select id_sala,capacidad,id_formato,formato_salas.identificador,descripcion,precio,butacas.id_butaca,butacas.identificador,estado from salas inner join salas_tienen_formato_salas inner join formato_salas  inner join butacas on salas.id_sala= salas_tienen_formato_salas.salas_id_sala 
+and salas_tienen_formato_salas.formato_salas_id_formato=formato_salas.id_formato and butacas.salas_id_sala=salas.id_sala where salas.id_sala=1;
+
+select id_sala,id_formato,identificador,descripcion,capacidad from salas inner join salas_tienen_formato_salas inner join formato_salas 
+on salas.id_sala=salas_tienen_formato_salas.salas_id_sala and salas_tienen_formato_salas.formato_salas_id_formato=formato_salas.id_formato where salas.id_sala=2 ;
+
+select id_sala,capacidad,identificador from salas inner join salas_tienen_formato_salas inner join formato_salas 
+on salas.id_sala=salas_tienen_formato_salas.salas_id_sala and salas_tienen_formato_salas.formato_salas_id_formato=formato_salas.id_formato where salas.id_sala=2 ;
+
+select id_butaca,identificador,estado from butacas where salas_id_sala=2;
+
+
+select id_funcion,fecha,salas_id_sala,peliculas_id_pelicula from funciones;
+
+select id_reserva, fecha, cantidad, descuento,usuarios_id_usuario, funciones_id_funcion, funciones_salas_id_sala, funciones_peliculas_id_pelicula from reservas where id_reserva=3;
+select * from peliculas;
+/*ultimo insert de iron man*/
+insert into peliculas(id_pelicula,nombre,sinopsis,duracion,director) values(3,'IRON MAN','el hombre de acero',126,'Jon Favreau');

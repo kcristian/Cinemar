@@ -4,94 +4,14 @@ import java.util.Scanner;
 import java.sql.*;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
-public class Cinemar {
+public class Cinemarsql {
 	
 	private Credenciales cs;
-	private Usuario u;
 	
-	public Cinemar() {
+	public Cinemarsql() {
 		cs=new Credenciales();
 	}
-	public void IniciarSesion(){
-		String username;
-		String password;
-		String continuar;
-		Scanner entrada=new Scanner(System.in);
 		
-		System.out.println("username: ");
-		username=entrada.nextLine();
-		
-		System.out.println("password: ");
-		password=entrada.nextLine();
-		
-		if(existeUsuario(username, password)) {
-			Menu();
-			do {
-				Menu();
-				System.out.println("desea continuar? s/n");
-				continuar=entrada.nextLine();
-				
-			}while(continuar.equals("y"));
-			
-		}else {
-			System.out.println("el usuario no existe");
-		}
-	}
-
-	public void Menu() {
-		String valor;
-		Scanner entrada=new Scanner(System.in);
-		
-		System.out.println("#### MENU DE OPCIONES - INGRESE UN NUMERO ####");
-		System.out.println("1) CREAR RESERVA"); //executequery
-		System.out.println("2) MODIFICAR RESERVA");
-		System.out.println("3) VER MIS RESERVAS");//executequery
-		System.out.println("5) HISTORICO DE ENTRADAS");
-		
-		System.out.println("6) VER SALAS");//executequery
-		
-		System.out.println("7) VER TODAS LAS RESERVAS");//executequery
-		System.out.println("8) VER RESERVA POR CLIENTE");//executequery
-		System.out.println("9) CREAR SALA CON PELICULA");
-		System.out.println("10) MODIFICAR UNA SALA");
-		System.out.println("11) ELIMINAR UNA SALA");
-		System.out.println("12) MODIFICAR DESCUENTO");
-		
-		valor=entrada.nextLine();
-		
-		switch(valor) {
-		case "1":	System.out.println("se hace 1");
-					break;
-		case "2":	System.out.println("se hace 2");
-					break;
-		case "3":	System.out.println("se hace 3");
-					break;
-		case "4":	System.out.println("se hace 4");
-					break;
-		case "5":	System.out.println("se hace 5");
-					break;
-		case "6":	System.out.println("se hace 6");
-					break;
-		case "7":	System.out.println("se hace 7");
-					break;
-		case "8":	System.out.println("se hace 8");
-					break;
-		case "9":	System.out.println("se hace 9");
-					break;
-		case "10":	System.out.println("se hace 10");
-					break;
-		case "11":	System.out.println("se hace 11");
-					break;
-		case "12":	System.out.println("se hace 12");
-					break;
-		
-		default: 	System.out.println("debe ingresar una opcion valida");
-					break;
-		}
-		
-		
-	}
-	
 	
 	// existe usuario devuelve true si el usuario ya existe en la BDD
 	public boolean existeUsuario(String usuario,String contraseña) {
@@ -148,7 +68,7 @@ public class Cinemar {
 			}
 			
 		}
-		System.out.println("Adios!..");
+		//System.out.println("Adios!..");
 		return respuesta;
 	}
 	
@@ -166,16 +86,17 @@ public class Cinemar {
 			//PASO 2: Registrar JDBC driver
 			Class.forName(cs.JDBDC_DRIVER);
 			//PASO 3: Abrir una Conexion
-			System.out.println("Conectando con la base de datos...");
+			//System.out.println("Conectando con la base de datos...");
 			conn=DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
 			//PASO 4: Ejecutar una consulta SQL
-			System.out.println("Creando el estado...");
+			//System.out.println("Creando el estado...");
 			stmt=conn.createStatement();
 			String sql;
+			System.out.println("registrando usuario");
 			sql="INSERT INTO usuarios VALUES('"+usuario.getUserid()+"','"+usuario.getRol_usuario()+"','"+usuario.getUsername()+
 					"','"+usuario.getPassword()+"','"+usuario.getEmail()+"','"+fecha_nacimiento+"','"+usuario.getTelefono()+"','"+fecha_de_registro+"')";
 			//sql="SELECT username, password FROM usuarios WHERE username = '"+usuario+"' AND password = '"+contraseña+"'; ";
-			System.out.println(sql);
+			//System.out.println(sql);
 			stmt.executeUpdate(sql);
 			
 			stmt.close();
@@ -201,7 +122,7 @@ public class Cinemar {
 			}
 			
 		}
-		System.out.println("Adios!..");
+		
 	}
 	
 	public Usuario dameUsuario(String user, String pass) {
@@ -214,13 +135,13 @@ public class Cinemar {
 			//PASO 2: Registrar JDBC driver
 			Class.forName(cs.JDBDC_DRIVER);
 			//PASO 3: Abrir una Conexion
-			System.out.println("Conectando con la base de datos...");
+			//System.out.println("Conectando con la base de datos...");
 			conn=DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
 			//PASO 4: Ejecutar una consulta SQL
-			System.out.println("Creando el estado...");
+			//System.out.println("Creando el estado...");
 			stmt=conn.createStatement();
 			String sql;
-			
+			System.out.println("Buscando usuario");
 			sql="SELECT id_usuario, rol, username, password,email,fecha_nacimiento,telefono,fecha_registro FROM"
 					+ " usuarios WHERE username= '"+user+"' and password= '"+pass+"';";
 			//sql="SELECT username, password FROM usuarios WHERE username = '"+usuario+"' AND password = '"+contraseña+"'; ";
@@ -274,7 +195,7 @@ public class Cinemar {
 			}
 			
 		}
-		System.out.println("Adios!..");
+		//System.out.println("Adios!..");
 
 		
 		return usuario;
@@ -290,13 +211,13 @@ public class Cinemar {
 			//PASO 2: Registrar JDBC driver
 			Class.forName(cs.JDBDC_DRIVER);
 			//PASO 3: Abrir una Conexion
-			System.out.println("Conectando con la base de datos...");
+			//System.out.println("Conectando con la base de datos...");
 			conn=DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
 			//PASO 4: Ejecutar una consulta SQL
-			System.out.println("Creando el estado...");
+			//System.out.println("Creando el estado...");
 			stmt=conn.createStatement();
 			String sql;
-			
+			System.out.println("mostrando funciones");
 			sql="SELECT id_funcion,fecha,salas_id_sala,peliculas_id_pelicula,nombre FROM funciones "
 					+ "INNER JOIN peliculas on peliculas_id_pelicula = id_pelicula WHERE fecha <= curdate();";
 			//sql="SELECT username, password FROM usuarios WHERE username = '"+usuario+"' AND password = '"+contraseña+"'; ";
@@ -340,7 +261,7 @@ public class Cinemar {
 			}
 			
 		}
-		System.out.println("Adios!..");
+		
 	}
 	
 	//CLIENTE
@@ -358,16 +279,17 @@ public class Cinemar {
 				 Class.forName(cs.JDBDC_DRIVER);
 				 
 				 //PASO3: Abrir una Conexion
-				 System.out.println("Connecting to database...");
+				 //System.out.println("Connecting to database...");
 				 conn = DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
 				 
 				 //PASO 4: Ejecutar una consulta SQL
-				 System.out.println("Creating statement...");
+				 //System.out.println("Creating statement...");
 				 stmt = conn.createStatement();
 				 //String sql =  MessageFormat.format("INSERT INTO Usuarios (usuario, clave, administrador) VALUES ({0}, {1}, {2});", nombre, clave, is_admin);
+				 System.out.println("creando reserva");
 				 String sql = "insert into reservas values("+id_reserva+",'"+fecha+"',"+cantidad+","+id_descuento+","+id_usuario+","+id_funcion+","+id_sala+","+id_pelicula+")";
 				 stmt.executeUpdate(sql);
-				 System.out.println("Valores Insertados con Exito en tabla reservas");
+				 //System.out.println("Valores Insertados con Exito en tabla reservas");
 				 
 				 
 				 //PASO6: Entorno de Limpieza
@@ -393,7 +315,7 @@ public class Cinemar {
 				 se.printStackTrace();
 				 	} //cierra finally try
 				 } //cierra try
-				 System.out.println("Goodbye!");
+				 //System.out.println("Goodbye!");
 	}
 
 	public boolean existeReserva(int id_de_reserva) {
@@ -404,15 +326,16 @@ public class Cinemar {
 			//PASO 2: Registrar JDBC driver
 			Class.forName(cs.JDBDC_DRIVER);
 			//PASO 3: Abrir una Conexion
-			System.out.println("Conectando con la base de datos...");
+			//System.out.println("Conectando con la base de datos...");
 			conn=DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
 			//PASO 4: Ejecutar una consulta SQL
-			System.out.println("Creando el estado...");
+			//System.out.println("Creando el estado...");
 			stmt=conn.createStatement();
 			String sql;
 			//sql="SELECT * from usuarios";
+			System.out.println("buscando la reserva..");
 			sql="SELECT id_reserva FROM reservas WHERE id_reserva= '"+id_de_reserva+"';";
-			System.out.println(sql);
+			//System.out.println(sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			while(rs.next()) {
@@ -450,7 +373,7 @@ public class Cinemar {
 			}
 			
 		}
-		System.out.println("Adios!..");
+		//System.out.println("Adios!..");
 		return respuesta;
 	}
 	
@@ -463,17 +386,17 @@ public class Cinemar {
 			//PASO 2: Registrar JDBC driver
 			Class.forName(cs.JDBDC_DRIVER);
 			//PASO 3: Abrir una Conexion
-			System.out.println("Conectando con la base de datos...");
+			//System.out.println("Conectando con la base de datos...");
 			conn=DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
 			//PASO 4: Ejecutar una consulta SQL
-			System.out.println("Creando el estado...");
+			//System.out.println("Creando el estado...");
 			stmt=conn.createStatement();
 			String sql;
-			
+			System.out.println("modificando reserva..");
 			sql="update reservas set id_reserva='"+id_reserva+"', fecha='"+fecha+"',cantidad='"+cantidad+"',descuento='"+descuento+"',usuarios_id_usuario='"+id_usuario+"',"
 					+ "funciones_id_funcion='"+id_funcion+"',funciones_salas_id_sala='"+id_sala+"',funciones_peliculas_id_pelicula='"+id_pelicula+"' where id_reserva="+id_res_modificar+"; ";
 			//sql="SELECT username, password FROM usuarios WHERE username = '"+usuario+"' AND password = '"+contraseña+"'; ";
-			System.out.println(sql);
+			//System.out.println(sql);
 			stmt.executeUpdate(sql);
 			
 			
@@ -513,10 +436,10 @@ public class Cinemar {
 			//PASO 2: Registrar JDBC driver
 			Class.forName(cs.JDBDC_DRIVER);
 			//PASO 3: Abrir una Conexion
-			System.out.println("Conectando con la base de datos...");
+			//System.out.println("Conectando con la base de datos...");
 			conn=DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
 			//PASO 4: Ejecutar una consulta SQL
-			System.out.println("Creando el estado...");
+			//System.out.println("Creando el estado...");
 			stmt=conn.createStatement();
 			String sql;
 			System.out.println("se buscara la funcion");
@@ -564,7 +487,7 @@ public class Cinemar {
 			}
 			
 		}
-		System.out.println("Adios!..");
+		
 				
 		return f;
 	}
@@ -654,7 +577,7 @@ public class Cinemar {
 		Statement stmt=null;
 		
 		try {
-			System.out.println("buscando el usuario por id..");
+			System.out.println("buscando el descuento..");
 			//PASO 2: Registrar JDBC driver
 			Class.forName(cs.JDBDC_DRIVER);
 			//PASO 3: Abrir una Conexion
@@ -721,6 +644,7 @@ public class Cinemar {
 			sql="SELECT id_usuario, rol, username, password,email,fecha_nacimiento,telefono,fecha_registro FROM"
 					+ " usuarios WHERE id_usuario= "+id_usuario+";";
 			//sql="SELECT username, password FROM usuarios WHERE username = '"+usuario+"' AND password = '"+contraseña+"'; ";
+			System.out.println("buscando el usuario por id...");
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			while(rs.next()) {
@@ -771,7 +695,7 @@ public class Cinemar {
 			}
 			
 		}
-		System.out.println("Adios!..");
+		//System.out.println("Adios!..");
 		
 		return usuario;
 	}
@@ -784,13 +708,13 @@ public class Cinemar {
 			//PASO 2: Registrar JDBC driver
 			Class.forName(cs.JDBDC_DRIVER);
 			//PASO 3: Abrir una Conexion
-			System.out.println("Conectando con la base de datos...");
+			//System.out.println("Conectando con la base de datos...");
 			conn=DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
 			//PASO 4: Ejecutar una consulta SQL
-			System.out.println("Creando el estado...");
+			//System.out.println("Creando el estado...");
 			stmt=conn.createStatement();
 			String sql;
-			
+			System.out.println("buscando todas las reservas...");
 			sql="select id_reserva, fecha, cantidad,username,email,telefono,id_usuario from usuarios "
 					+ "inner join reservas on id_usuario=usuarios_id_usuario where usuarios.id_usuario='"+id_de_usuario+"';";
 			//sql="SELECT username, password FROM usuarios WHERE username = '"+usuario+"' AND password = '"+contraseña+"'; ";
@@ -840,7 +764,7 @@ public class Cinemar {
 			}
 			
 		}
-		System.out.println("Adios!..");
+		//System.out.println("Adios!..");
 	}
 	
 	public Pelicula damePelicula (int id_pelicula) {
@@ -852,10 +776,10 @@ public class Cinemar {
 			//PASO 2: Registrar JDBC driver
 			Class.forName(cs.JDBDC_DRIVER);
 			//PASO 3: Abrir una Conexion
-			System.out.println("Conectando con la base de datos...");
+			//System.out.println("Conectando con la base de datos...");
 			conn=DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
 			//PASO 4: Ejecutar una consulta SQL
-			System.out.println("Creando el estado...");
+			//System.out.println("Creando el estado...");
 			stmt=conn.createStatement();
 			String sql;
 			
@@ -924,10 +848,10 @@ public class Cinemar {
 			//PASO 2: Registrar JDBC driver
 			Class.forName(cs.JDBDC_DRIVER);
 			//PASO 3: Abrir una Conexion
-			System.out.println("Conectando con la base de datos...");
+			//System.out.println("Conectando con la base de datos...");
 			conn=DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
 			//PASO 4: Ejecutar una consulta SQL
-			System.out.println("Creando el estado...");
+			//System.out.println("Creando el estado...");
 			stmt=conn.createStatement();
 			String sql;
 			
@@ -969,7 +893,7 @@ public class Cinemar {
 			}
 			
 		}
-		System.out.println("Adios!..");
+		//System.out.println("Adios!..");
 		
 		return tipos;
 	}
@@ -984,10 +908,10 @@ public class Cinemar {
 			//PASO 2: Registrar JDBC driver
 			Class.forName(cs.JDBDC_DRIVER);
 			//PASO 3: Abrir una Conexion
-			System.out.println("Conectando con la base de datos...");
+			//System.out.println("Conectando con la base de datos...");
 			conn=DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
 			//PASO 4: Ejecutar una consulta SQL
-			System.out.println("Creando el estado...");
+			//System.out.println("Creando el estado...");
 			stmt=conn.createStatement();
 			String sql;
 			
@@ -1031,7 +955,7 @@ public class Cinemar {
 			}
 			
 		}
-		System.out.println("Adios!..");
+		//System.out.println("Adios!..");
 
 		
 		return clasificacion;
@@ -1047,10 +971,10 @@ public class Cinemar {
 			//PASO 2: Registrar JDBC driver
 			Class.forName(cs.JDBDC_DRIVER);
 			//PASO 3: Abrir una Conexion
-			System.out.println("Conectando con la base de datos...");
+			//System.out.println("Conectando con la base de datos...");
 			conn=DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
 			//PASO 4: Ejecutar una consulta SQL
-			System.out.println("Creando el estado...");
+			//System.out.println("Creando el estado...");
 			stmt=conn.createStatement();
 			String sql;
 			
@@ -1091,7 +1015,7 @@ public class Cinemar {
 			}
 			
 		}
-		System.out.println("Adios!..");
+		//System.out.println("Adios!..");
 
 		
 		return generos;
@@ -1106,14 +1030,14 @@ public class Cinemar {
 			//PASO 2: Registrar JDBC driver
 			Class.forName(cs.JDBDC_DRIVER);
 			//PASO 3: Abrir una Conexion
-			System.out.println("Conectando con la base de datos...");
+			//System.out.println("Conectando con la base de datos...");
 			conn=DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
 			//PASO 4: Ejecutar una consulta SQL
-			System.out.println("Creando el estado...");
+			//System.out.println("Creando el estado...");
 			stmt=conn.createStatement();
 			String sql;
 			sql="select  actores.nombre, actores.apellido from actores inner join reparto inner join peliculas on peliculas.reparto = reparto.id_reparto where id_pelicula='"+ id_de_pelicula+"' ";
-			System.out.println(sql);
+			//System.out.println(sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
 				String resultado1 = rs.getString("actores.nombre");
@@ -1145,7 +1069,7 @@ public class Cinemar {
 			}
 			
 		}
-		System.out.println("Adios!..");
+		//System.out.println("Adios!..");
 		return actores;
 	}
 	
@@ -1158,10 +1082,10 @@ public class Cinemar {
 			//PASO 2: Registrar JDBC driver
 			Class.forName(cs.JDBDC_DRIVER);
 			//PASO 3: Abrir una Conexion
-			System.out.println("Conectando con la base de datos...");
+			//System.out.println("Conectando con la base de datos...");
 			conn=DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
 			//PASO 4: Ejecutar una consulta SQL
-			System.out.println("Creando el estado...");
+			//System.out.println("Creando el estado...");
 			stmt=conn.createStatement();
 			String sql;
 			
@@ -1217,7 +1141,7 @@ public class Cinemar {
 			}
 			
 		}
-		System.out.println("Adios!..");
+		//System.out.println("Adios!..");
     }
 	
 	public Sala dameSala(int id_sala) {
@@ -1230,10 +1154,10 @@ public class Cinemar {
 			//PASO 2: Registrar JDBC driver
 			Class.forName(cs.JDBDC_DRIVER);
 			//PASO 3: Abrir una Conexion
-			System.out.println("Conectando con la base de datos...");
+			//System.out.println("Conectando con la base de datos...");
 			conn=DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
 			//PASO 4: Ejecutar una consulta SQL
-			System.out.println("Creando el estado...");
+			//System.out.println("Creando el estado...");
 			stmt=conn.createStatement();
 			String sql;
 			
@@ -1291,10 +1215,10 @@ public class Cinemar {
 			//PASO 2: Registrar JDBC driver
 			Class.forName(cs.JDBDC_DRIVER);
 			//PASO 3: Abrir una Conexion
-			System.out.println("Conectando con la base de datos...");
+			//System.out.println("Conectando con la base de datos...");
 			conn=DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
 			//PASO 4: Ejecutar una consulta SQL
-			System.out.println("Creando el estado...");
+			//System.out.println("Creando el estado...");
 			stmt=conn.createStatement();
 			String sql;
 			
@@ -1348,10 +1272,10 @@ public class Cinemar {
 			//PASO 2: Registrar JDBC driver
 			Class.forName(cs.JDBDC_DRIVER);
 			//PASO 3: Abrir una Conexion
-			System.out.println("Conectando con la base de datos...");
+			//System.out.println("Conectando con la base de datos...");
 			conn=DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
 			//PASO 4: Ejecutar una consulta SQL
-			System.out.println("Creando el estado...");
+			//System.out.println("Creando el estado...");
 			stmt=conn.createStatement();
 			String sql;
 			
@@ -1417,10 +1341,10 @@ public class Cinemar {
 			}
 			
 		}
-		System.out.println("Adios!..");
+		//System.out.println("Adios!..");
 	}
 	
-	public void verRecervaPorCliente (int id_usuario) {
+	public void verReservaPorCliente (int id_usuario) {
     	Connection conn=null;
 		Statement stmt=null;
 		
@@ -1428,10 +1352,10 @@ public class Cinemar {
 			//PASO 2: Registrar JDBC driver
 			Class.forName(cs.JDBDC_DRIVER);
 			//PASO 3: Abrir una Conexion
-			System.out.println("Conectando con la base de datos...");
+			//System.out.println("Conectando con la base de datos...");
 			conn=DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
 			//PASO 4: Ejecutar una consulta SQL
-			System.out.println("Creando el estado...");
+			//System.out.println("Creando el estado...");
 			stmt=conn.createStatement();
 			String sql;
 			
@@ -1494,15 +1418,99 @@ public class Cinemar {
 			}
 			
 		}
-		System.out.println("Adios!..");
+		//System.out.println("Adios!..");
     }
 	
 	// inicio
 	public void crearSala(int id_sala,int capacidad) {
 		
+		Connection conn=null;
+		Statement stmt=null;
+		
+		try {
+			//PASO 2: Registrar JDBC driver
+			Class.forName(cs.JDBDC_DRIVER);
+			//PASO 3: Abrir una Conexion
+			//System.out.println("Conectando con la base de datos...");
+			conn=DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
+			//PASO 4: Ejecutar una consulta SQL
+			//System.out.println("Creando el estado...");
+			stmt=conn.createStatement();
+			String sql;
+			sql="INSERT INTO salas(id_sala,capacidad) VALUES("+id_sala+","+capacidad+");";
+			
+			//System.out.println(sql);
+			stmt.executeUpdate(sql);
+			System.out.println("se inserto una sala");
+			
+			stmt.close();
+			conn.close();
+			
+		} catch (SQLException se) {
+			// Resolver errores para JDBC
+			se.printStackTrace();
+		} catch(Exception e) {
+			// Resolver errores para Class.forName
+			e.printStackTrace();
+		}finally {
+			try {
+				if(stmt!=null)
+					stmt.close();
+			}catch(SQLException se2) {
+			}
+			try {
+				if(conn!=null)
+					conn.close();
+			}catch(SQLException se) {
+				se.printStackTrace();
+			}
+			
+		}
 	}
 	public void crearFormatoSala(int id_formato,String identificador,String descripcion,float precio) {
+		Connection conn=null;
+		Statement stmt=null;
 		
+		try {
+			//PASO 2: Registrar JDBC driver
+			Class.forName(cs.JDBDC_DRIVER);
+			//PASO 3: Abrir una Conexion
+			//System.out.println("Conectando con la base de datos...");
+			conn=DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
+			//PASO 4: Ejecutar una consulta SQL
+			//System.out.println("Creando el estado...");
+			stmt=conn.createStatement();
+			String sql;
+			sql="INSERT INTO butacas(id_fromato,identificador,descripcion,precio) "
+					+ "VALUES("+id_formato+",'"+identificador+"','"+descripcion+"',"+precio+");";
+			
+			//System.out.println(sql);
+			stmt.executeUpdate(sql);
+			System.out.println("se inserto un nuevo formato");
+			
+			stmt.close();
+			conn.close();
+			
+		} catch (SQLException se) {
+			// Resolver errores para JDBC
+			se.printStackTrace();
+		} catch(Exception e) {
+			// Resolver errores para Class.forName
+			e.printStackTrace();
+		}finally {
+			try {
+				if(stmt!=null)
+					stmt.close();
+			}catch(SQLException se2) {
+			}
+			try {
+				if(conn!=null)
+					conn.close();
+			}catch(SQLException se) {
+				se.printStackTrace();
+			}
+			
+		}
 	}
 	public void crearButaca(int id_butaca,int id_sala){
 		Connection conn=null;
@@ -1512,15 +1520,15 @@ public class Cinemar {
 			//PASO 2: Registrar JDBC driver
 			Class.forName(cs.JDBDC_DRIVER);
 			//PASO 3: Abrir una Conexion
-			System.out.println("Conectando con la base de datos...");
+			//System.out.println("Conectando con la base de datos...");
 			conn=DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
 			//PASO 4: Ejecutar una consulta SQL
-			System.out.println("Creando el estado...");
+			//System.out.println("Creando el estado...");
 			stmt=conn.createStatement();
 			String sql;
 			sql="INSERT INTO butacas(id_butaca,salas_id_sala) VALUES("+id_butaca+","+id_sala+");";
 			
-			System.out.println(sql);
+			//System.out.println(sql);
 			stmt.executeUpdate(sql);
 			System.out.println("se inserto una butaca");
 			
@@ -1547,20 +1555,10 @@ public class Cinemar {
 			}
 			
 		}
-		System.out.println("Adios!..");
+		//System.out.println("Adios!..");
 	}
 	
-	public void reservarButaca(int id_sala) {
-		
-		
-	}
 	public void crearPelicula(int id_pelicula,String nombre_pelicula,String sinopsis,int duracion,String director) {
-		
-	}
-	
-	
-	//fin
-	public void modificarSala(int id_sala, int capacidad) {
 		
 		Connection conn=null;
 		Statement stmt=null;
@@ -1569,10 +1567,59 @@ public class Cinemar {
 			//PASO 2: Registrar JDBC driver
 			Class.forName(cs.JDBDC_DRIVER);
 			//PASO 3: Abrir una Conexion
-			System.out.println("Conectando con la base de datos...");
+			//System.out.println("Conectando con la base de datos...");
 			conn=DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
 			//PASO 4: Ejecutar una consulta SQL
-			System.out.println("Creando el estado...");
+			//System.out.println("Creando el estado...");
+			stmt=conn.createStatement();
+			String sql;
+			sql="insert into peliculas(id_pelicula,nombre,sinopsis,duracion,director) "
+					+ "values("+id_pelicula+",'"+nombre_pelicula+"','"+sinopsis+"',"+duracion+",'"+director+"');";
+			
+			//System.out.println(sql);
+			stmt.executeUpdate(sql);
+			System.out.println("se inserto una pelicula");
+			
+			stmt.close();
+			conn.close();
+			
+		} catch (SQLException se) {
+			// Resolver errores para JDBC
+			se.printStackTrace();
+		} catch(Exception e) {
+			// Resolver errores para Class.forName
+			e.printStackTrace();
+		}finally {
+			try {
+				if(stmt!=null)
+					stmt.close();
+			}catch(SQLException se2) {
+			}
+			try {
+				if(conn!=null)
+					conn.close();
+			}catch(SQLException se) {
+				se.printStackTrace();
+			}
+			
+		}
+	}
+	
+	
+	//fin
+	public void modificarSala(int id_sala, int capacidad, int id_sala_modificar) {
+		
+		Connection conn=null;
+		Statement stmt=null;
+		
+		try {
+			//PASO 2: Registrar JDBC driver
+			Class.forName(cs.JDBDC_DRIVER);
+			//PASO 3: Abrir una Conexion
+			//System.out.println("Conectando con la base de datos...");
+			conn=DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
+			//PASO 4: Ejecutar una consulta SQL
+			//System.out.println("Creando el estado...");
 			stmt=conn.createStatement();
 			String sql;
 			
@@ -1585,7 +1632,7 @@ public class Cinemar {
 			//sql="UPDATE salas SET id_sala='"+id_sala+"', capacidad='"+ capacidad+"' WHERE id_sala='"+id_sala+"';";
 			//sql="UPDATE salas SET ID_sala='"+ID_sala+"', capacidad='"+ capacidad+"' WHERE id_sala='"+id_sala+"';";
 			//sql="SELECT id_sala, capacidad FROM salas WHERE id_sala= '"+id_sala+"';";
-			sql="UPDATE salas SET capacidad='"+ capacidad+"' WHERE id_sala='"+id_sala+"';";
+			sql="UPDATE salas SET id_sala= "+id_sala+",capacidad='"+ capacidad+"' WHERE id_sala='"+id_sala_modificar+"';";
 			stmt.executeUpdate(sql);
 			
 			
@@ -1613,7 +1660,7 @@ public class Cinemar {
 			}
 			
 		}
-		System.out.println("Adios!..");
+		//System.out.println("Adios!..");
     }
 
 	public void eliminarSala(int id_sala) {
@@ -1625,10 +1672,10 @@ public class Cinemar {
 			//PASO 2: Registrar JDBC driver
 			Class.forName(cs.JDBDC_DRIVER);
 			//PASO 3: Abrir una Conexion
-			System.out.println("Conectando con la base de datos...");
+			//System.out.println("Conectando con la base de datos...");
 			conn=DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
 			//PASO 4: Ejecutar una consulta SQL
-			System.out.println("Creando el estado...");
+			//System.out.println("Creando el estado...");
 			stmt=conn.createStatement();
 			String sql;
 			
@@ -1660,7 +1707,7 @@ public class Cinemar {
 			}
 			
 		}
-		System.out.println("Adios!..");
+		//System.out.println("Adios!..");
     }
 	
 	public void modificarDescuento(int id_descuento_nuevo,String dia_de_descuento,float descuento_nuevo,int id_descuento_modificar) {
@@ -1672,10 +1719,10 @@ public class Cinemar {
 			//PASO 2: Registrar JDBC driver
 			Class.forName(cs.JDBDC_DRIVER);
 			//PASO 3: Abrir una Conexion
-			System.out.println("Conectando con la base de datos...");
+			//System.out.println("Conectando con la base de datos...");
 			conn=DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
 			//PASO 4: Ejecutar una consulta SQL
-			System.out.println("Creando el estado...");
+			//System.out.println("Creando el estado...");
 			stmt=conn.createStatement();
 			String sql;
 			
@@ -1718,10 +1765,10 @@ public class Cinemar {
 			//PASO 2: Registrar JDBC driver
 			Class.forName(cs.JDBDC_DRIVER);
 			//PASO 3: Abrir una Conexion
-			System.out.println("Conectando con la base de datos...");
+			//System.out.println("Conectando con la base de datos...");
 			conn=DriverManager.getConnection(cs.DB_URL,cs.USER,cs.PASS);
 			//PASO 4: Ejecutar una consulta SQL
-			System.out.println("Creando el estado...");
+			//System.out.println("Creando el estado...");
 			stmt=conn.createStatement();
 			String sql;
 			
@@ -1767,7 +1814,7 @@ public class Cinemar {
 			}
 			
 		}
-		System.out.println("Adios!..");
+		//System.out.println("Adios!..");
 	}
 
 

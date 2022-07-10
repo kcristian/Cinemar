@@ -13,7 +13,7 @@ public class Pelicula {
 	private Clasificacion clasificacion;
 	private ArrayList<TipoPelicula> tipos;
 	
-	Pelicula(int num_pelicula, String nombre,Clasificacion cl,TipoPelicula tipo,Genero genero,int duracion,TipoPelicula tp){
+	Pelicula(int num_pelicula, String nombre,Clasificacion cl,TipoPelicula tipo,Genero genero,int duracion){
 		
 		this.num_pelicula= num_pelicula;
 		this.nombre=nombre;
@@ -25,7 +25,6 @@ public class Pelicula {
 		this.director="-";
 		this.clasificacion=cl;
 		this.tipos=new ArrayList<>();
-		this.tipos.add(tp);
 		this.duracion=duracion;
 	}
 

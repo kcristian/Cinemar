@@ -12,7 +12,15 @@ public class Cinemar_main {
 		String email="andrea@gmail.com";
 		int telefono=42228899;
 		Usuario u1=new Usuario(200,username,password,rol,email,telefono,new Date(192,7,10));
-		Cinemar c=new Cinemar();
+		Cinemarsql c=new Cinemarsql();
+		
+		Tablero t=new Tablero();
+		t.Iniciar();
+		
+		/*Usuario u2 = c.dameUsuario("cristian9", "cristian22"); 
+		System.out.println(u2.getRol_usuario());
+		String roll=u2.getRol_usuario().toString();
+		System.out.println(roll);*/
 		
 		//probando dame pelicula y sala
 		//System.out.println(c.damePelicula(1).toString());
@@ -24,8 +32,7 @@ public class Cinemar_main {
 		//probando dame sala
 		//System.out.println(c.dameSala(2));
 		
-		System.out.println(c.dameFuncion(1).toString());
-		
+				
 		//System.out.println(c.dameButacas(2).toString());
 		/*probando dame actores
 		 * ArrayList<String> mis_actores;
