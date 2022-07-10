@@ -5,7 +5,7 @@ public class Tablero {
 	private Usuario usuario;
 	private Cinemarsql cine;
 	private String rol;
-	public void Tablero() {
+	public  Tablero() {
 		
 	}
 	
@@ -68,32 +68,118 @@ public class Tablero {
 		valor=entrada.nextLine();
 		
 		switch(valor) {
-		case "1":	
+		case "1":	if(rol.equals("CLIENTE")) {
+						try {
+							crearReserva();
+						} catch (Exception e) {
+							
+						}
+					}else {
+						System.out.println("debe ser cliente para realizar esta accion");
+					}
 					break;
-		case "2":	System.out.println("se hace 2");
+		case "2":	if(rol.equals("CLIENTE")) {
+						try {
+							modificarReserva();
+						} catch (Exception e) {
+				
+						}
+					}else {
+						System.out.println("debe ser cliente para realizar esta accion");
+					}
 					break;
-		case "3":	System.out.println("se hace 3");
+		case "3":	if(rol.equals("CLIENTE")) {
+						try {
+							verMisReservas();
+						} catch (Exception e) {
+	
+						}
+					}else {
+						System.out.println("debe ser cliente para realizar esta accion");
+					}
 					break;
-		case "4":	System.out.println("se hace 4");
+		case "4":	if(rol.equals("CLIENTE")) {
+						try {
+							verHistoricoDeEntradas();
+						} catch (Exception e) {
+	
+						}
+					}else {
+						System.out.println("debe ser cliente para realizar esta accion");
+					}
 					break;
-		case "5":	System.out.println("se hace 5");
+		case "5":	if(rol.equals("CLIENTE")||rol.equals("ADMINISTRACION")) {
+						try {
+							verSalas();
+						} catch (Exception e) {
+	
+						}
+					}else {
+						System.out.println("no se pudo realizar esta accion");
+					}
 					break;
-		case "6":	System.out.println("se hace 6");
+		case "6":	if(rol.equals("ADMINISTRACION")) {
+						try {
+							verTodasLasReservas();
+						} catch (Exception e) {
+	
+						}
+					}else {
+						System.out.println("debe ser administrador para realizar esta accion");
+					}
 					break;
-		case "7":	System.out.println("se hace 7");
+		case "7":	if(rol.equals("ADMINISTRACION")) {
+						try {
+							mostrarReservasPorCliente();
+						} catch (Exception e) {
+
+						}
+					}else {
+						System.out.println("debe ser administrador para realizar esta accion");
+					}
 					break;
-		case "8":	System.out.println("se hace 8");
+		case "8":	if(rol.equals("ADMINISTRACION")) {
+						try {
+							crearSalaConPelicula();
+						} catch (Exception e) {
+
+						}
+					}else {
+						System.out.println("debe ser administrador para realizar esta accion");
+					}
 					break;
-		case "9":	System.out.println("se hace 9");
+		case "9":	if(rol.equals("ADMINISTRACION")) {
+						try {
+							modificarUnaSala();
+						} catch (Exception e) {
+
+						}
+					}else {
+						System.out.println("debe ser administrador para realizar esta accion");
+					}
 					break;
-		case "10":	System.out.println("se hace 10");
+		case "10":	if(rol.equals("ADMINISTRACION")) {
+						try {
+							eliminarUnaSala();
+						} catch (Exception e) {
+
+						}
+					}else {
+						System.out.println("debe ser administrador para realizar esta accion");
+					}
 					break;
-		case "11":	System.out.println("se hace 11");
-					break;
-		case "12":	System.out.println("se hace 12");
+		case "11":	if(rol.equals("ADMINISTRACION")) {
+					try {
+							modificarDescuento();
+					} catch (Exception e) {
+
+					}
+					}else {
+						System.out.println("debe ser administrador para realizar esta accion");
+					}
 					break;
 		
-		default: 	System.out.println("debe ingresar una opcion valida");
+		default: 	System.out.println("debe ingresar una opcion valida..");
 					break;
 		}
 		
